@@ -1,5 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
+import React from 'react';
+import Login from './components/Login';
+import Header from './components/Header';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
