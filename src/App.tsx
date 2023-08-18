@@ -1,17 +1,17 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
+import Header from './components/Header';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="meals">
-      <span className="logo">TRYBEATS</span>
-      <Routes>
-        <Route path="/" element={ <Login /> } />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={ <Login /> } />
+      <Route path="/meals" element={ <Header /> } />
+    </Routes>
+
   );
 }
 
