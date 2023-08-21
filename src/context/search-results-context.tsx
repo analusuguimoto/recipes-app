@@ -19,6 +19,10 @@ type RecipeContextType = {
   drinkResults: Drink[];
   setMealResults: React.Dispatch<React.SetStateAction<Meal[]>>;
   setDrinkResults: React.Dispatch<React.SetStateAction<Drink[]>>;
+  updateMealState: (newState: Meal[]) => void;
+  updateDrinkState: (newState: Drink[]) => void;
+  fetchMeals: () => void;
+  fetchDrinks: () => void;
 };
 
 const RecipeContext = createContext<RecipeContextType>({
@@ -26,6 +30,10 @@ const RecipeContext = createContext<RecipeContextType>({
   drinkResults: [],
   setMealResults: () => {},
   setDrinkResults: () => {},
+  updateMealState: () => {},
+  updateDrinkState: () => {},
+  fetchMeals: () => {},
+  fetchDrinks: () => {},
 });
 
 export function useRecipeContext() {
@@ -49,6 +57,14 @@ export function RecipeProvider({ children }: RecipeProviderProps) {
     setDrinkResults(response.drinks);
   };
 
+  const updateMealState = (newState: Meal[]) => {
+    setMealResults(newState);
+  };
+
+  const updateDrinkState = (newState: Drink[]) => {
+    setDrinkResults(newState);
+  };
+
   useEffect(() => {
     fetchMeals();
     fetchDrinks();
@@ -64,6 +80,10 @@ export function RecipeProvider({ children }: RecipeProviderProps) {
         setMealResults,
         drinkResults,
         setDrinkResults,
+        updateMealState,
+        updateDrinkState,
+        fetchMeals,
+        fetchDrinks,
       } }
     >
       {children}

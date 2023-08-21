@@ -4,16 +4,23 @@ import RecipeList from '../components/MealRecipeList';
 import { useRecipeContext } from '../context/search-results-context';
 import { fetchApi } from '../helpers/fetchApi';
 import { CategoryType } from '../types';
-import { CATEGORY_MEALS_LINK } from '../helpers/links';
+import { CATEGORY_MEALS_LINK, FILTER_MEALS_LINK } from '../helpers/links';
 
 function FoodRecipe() {
-  const { mealResults } = useRecipeContext();
+  const { mealResults, updateMealState, fetchMeals } = useRecipeContext();
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const fetchCategory = async () => {
     const response = await fetchApi(CATEGORY_MEALS_LINK);
     setCategories(response.meals);
   };
+
+  const fetchFilteredMeals = async (category: string) => {
+    const response = await fetchApi(`${FILTER_MEALS_LINK}${category}`);
+    const data = response.meals;
+    updateMealState(data);
+  };
+
   useEffect(() => {
     fetchCategory();
   }, []);
@@ -21,16 +28,24 @@ function FoodRecipe() {
   return (
     <>
       <Header />
-      { categories.map((category, i) => (
-        i < 5 && (
-          <button
-            key={ category.strCategory }
-            data-testid={ `${category.strCategory}-category-filter` }
-            // onClick={}
-          >
-            { category.strCategory }
-          </button>
-        )))}
+      <div>
+        <button
+          data-testid="All-category-filter"
+          onClick={ () => fetchMeals() }
+        >
+          All
+        </button>
+        { categories.map((category, i) => (
+          i < 5 && (
+            <button
+              key={ category.strCategory }
+              data-testid={ `${category.strCategory}-category-filter` }
+              onClick={ () => fetchFilteredMeals(category.strCategory) }
+            >
+              { category.strCategory }
+            </button>
+          )))}
+      </div>
 
       {mealResults.length > 0 ? (
         <RecipeList recipes={ mealResults } />
