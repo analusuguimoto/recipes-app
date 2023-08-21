@@ -1,4 +1,4 @@
-[data-testid="footer"] {
-    position: fixed;
-    bottom: 0px;
+[ data-testid = 'footer' ] {
+  bottom: 0px;
+  position: fixed;
 }
