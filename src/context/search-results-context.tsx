@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { fetchApi } from '../helpers/fetchApi';
+import { DRINKS_LINK, MEALS_LINK } from '../helpers/links';
 
 export interface Meal {
   idMeal: string;
@@ -40,11 +41,11 @@ export function RecipeProvider({ children }: RecipeProviderProps) {
   const [drinkResults, setDrinkResults] = useState<Drink[]>([]);
 
   const fetchMeals = async () => {
-    const response = await fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const response = await fetchApi(MEALS_LINK);
     setMealResults(response.meals);
   };
   const fetchDrinks = async () => {
-    const response = await fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const response = await fetchApi(DRINKS_LINK);
     setDrinkResults(response.drinks);
   };
 
