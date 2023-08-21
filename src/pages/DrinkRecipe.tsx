@@ -9,6 +9,7 @@ import { CategoryType } from '../types';
 function DrinkRecipe() {
   const { drinkResults, updateDrinkState, fetchDrinks } = useRecipeContext();
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [checkCategory, setCheckCategory] = useState('');
 
   const fetchCategory = async () => {
     const response = await fetchApi(CATEGORY_DRINKS_LINK);
@@ -16,10 +17,15 @@ function DrinkRecipe() {
   };
 
   const fetchFilteredMeals = async (category: string) => {
-    const response = await fetchApi(`${FILTER_DRINKS_LINK}${category}`);
-    const data = response.drinks;
-    const limitedRecipes = data.slice(0, 12);
-    updateDrinkState(limitedRecipes);
+    setCheckCategory(category);
+    if (category === checkCategory) {
+      fetchDrinks();
+      setCheckCategory('');
+    } else {
+      const response = await fetchApi(`${FILTER_DRINKS_LINK}${category}`);
+      const data = response.drinks;
+      updateDrinkState(data);
+    }
   };
 
   useEffect(() => {

@@ -9,6 +9,7 @@ import { CATEGORY_MEALS_LINK, FILTER_MEALS_LINK } from '../helpers/links';
 function FoodRecipe() {
   const { mealResults, updateMealState, fetchMeals } = useRecipeContext();
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [checkCategory, setCheckCategory] = useState('');
 
   const fetchCategory = async () => {
     const response = await fetchApi(CATEGORY_MEALS_LINK);
@@ -16,9 +17,15 @@ function FoodRecipe() {
   };
 
   const fetchFilteredMeals = async (category: string) => {
-    const response = await fetchApi(`${FILTER_MEALS_LINK}${category}`);
-    const data = response.meals;
-    updateMealState(data);
+    setCheckCategory(category);
+    if (category === checkCategory) {
+      fetchMeals();
+      setCheckCategory('');
+    } else {
+      const response = await fetchApi(`${FILTER_MEALS_LINK}${category}`);
+      const data = response.meals;
+      updateMealState(data);
+    }
   };
 
   useEffect(() => {
