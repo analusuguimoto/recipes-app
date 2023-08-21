@@ -1,5 +1,7 @@
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import RecipeList from './RecipeList';
+import SearchBar from './SearchBar';
 
 function Header() {
   return (
@@ -15,6 +17,10 @@ function Header() {
         data-testid="search-top-btn"
       />
       <h1>Título</h1>
+      <SearchBar />
+      {searchResults && searchResults.meals && searchResults.meals.length > 0 && (
+        <RecipeList recipes={ searchResults.meals } />
+      )}
     </header>
   );
 }
