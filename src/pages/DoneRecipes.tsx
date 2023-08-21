@@ -1,3 +1,4 @@
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function DoneRecipes() {
@@ -5,6 +6,7 @@ function DoneRecipes() {
     <>
       <Header />
       <p>Oi, eu sou a DoneRecipes</p>
+      <Footer />
     </>
   );
 }

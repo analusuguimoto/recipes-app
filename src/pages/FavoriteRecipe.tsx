@@ -1,3 +1,4 @@
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function FavoriteRecipe() {
@@ -5,6 +6,7 @@ function FavoriteRecipe() {
     <>
       <Header />
       <p>Oi, eu sou a FavoriteRecipe</p>
+      <Footer />
     </>
   );
 }
