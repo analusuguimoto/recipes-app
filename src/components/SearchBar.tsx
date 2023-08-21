@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useFetch from '../hooks/use-fetch';
-import { FetchFunction,
+import { useNavigate, useLocation } from 'react-router-dom';
+import {
   fetchMealsByFirstLetter,
   fetchMealsByIngredient,
-  fetchMealsByName } from '../api';
+  fetchMealsByName,
+  fetchDrinksByFirstLetter,
+  fetchDrinksByIngredient,
+  fetchDrinksByName,
+} from '../api';
 import { useRecipeContext } from '../context/search-results-context';
 
 type SearchType = 'ingredient' | 'name' | 'first-letter';
@@ -12,33 +15,90 @@ type SearchType = 'ingredient' | 'name' | 'first-letter';
 function SearchBar() {
   const [searchType, setSearchType] = useState<SearchType>('ingredient');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const { setSearchResults } = useRecipeContext();
+  const { setDrinkResults, setMealResults } = useRecipeContext();
+  const location = useLocation();
 
-  /*   const navigate = useNavigate();
- */
+  const navigate = useNavigate();
   const FIRST_LETTER = 'first-letter';
+  const isDrinksPage = location.pathname.includes('/drinks');
 
-  const fetchFunction: FetchFunction = async () => {
-    if (searchType === 'ingredient') {
-      return fetchMealsByIngredient(searchQuery);
-    } if (searchType === 'name') {
-      return fetchMealsByName(searchQuery);
-    } if (searchType === FIRST_LETTER) {
-      return fetchMealsByFirstLetter(searchQuery);
+  const fetchRecipeData = async (fetchFunction: () => Promise<Response>) => {
+    try {
+      const response = await fetchFunction();
+      const jsonData = await response.json();
+      return jsonData;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle error
     }
-    throw new Error('Invalid search type');
   };
 
-  const { data } = useFetch(fetchFunction);
+  const isInvalidFirstLetterSearch = () => {
+    return searchType === FIRST_LETTER && searchQuery.length !== 1;
+  };
 
-  const handleSearch = () => {
-    setSearchResults(data);
+  const shouldShowNoResultsAlert = (jsonData: any) => {
+    return (
+      (!jsonData.meals || !Array.isArray(jsonData.meals) || jsonData.meals.length === 0)
+      && (!jsonData.drinks || !Array
+        .isArray(jsonData.drinks) || jsonData.drinks.length === 0)
+    );
+  };
 
-    /*     if (data && data.length === 1) {
-      const recipeId = data[0].idMeal || data[0].idDrink;
-      const recipeType = data[0].idMeal ? 'meals' : 'drinks';
-      navigate(`/${recipeType}/${recipeId}`);
-    } */
+  const updateResults = (jsonData: any) => {
+    if (isDrinksPage) {
+      setDrinkResults(jsonData.drinks || []);
+      setMealResults([]);
+    } else {
+      setMealResults(jsonData.meals || []);
+      setDrinkResults([]);
+    }
+  };
+
+  const handleSearch = async () => {
+    const fetchFunction = determineFetchFunction();
+    const jsonData = await fetchRecipeData(fetchFunction);
+
+    if (isInvalidFirstLetterSearch()) {
+      alert('Your search must have only 1 (one) character');
+      return;
+    }
+
+    if (shouldShowNoResultsAlert(jsonData)) {
+      alert("Sorry, we haven't found any recipes for these filters.");
+      return;
+    }
+
+    updateResults(jsonData);
+
+    if (jsonData.meals?.length === 1) {
+      const recipeId = jsonData.meals[0].idMeal;
+      navigate(`/meals/${recipeId}`);
+    } else if (jsonData.drinks?.length === 1) {
+      const recipeId = jsonData.drinks[0].idDrink;
+      navigate(`/drinks/${recipeId}`);
+    }
+  };
+
+  const determineFetchFunction = () => {
+    if (isDrinksPage) {
+      if (searchType === 'ingredient') {
+        return () => fetchDrinksByIngredient(searchQuery);
+      } if (searchType === 'name') {
+        return () => fetchDrinksByName(searchQuery);
+      } if (searchType === FIRST_LETTER) {
+        return () => fetchDrinksByFirstLetter(searchQuery);
+      }
+    } else {
+      if (searchType === 'ingredient') {
+        return () => fetchMealsByIngredient(searchQuery);
+      } if (searchType === 'name') {
+        return () => fetchMealsByName(searchQuery);
+      } if (searchType === FIRST_LETTER) {
+        return () => fetchMealsByFirstLetter(searchQuery);
+      }
+    }
+    throw new Error('Invalid search type');
   };
 
   return (
@@ -87,11 +147,7 @@ function SearchBar() {
         Primeira Letra
       </label>
 
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ handleSearch }
-      >
+      <button type="button" data-testid="exec-search-btn" onClick={ handleSearch }>
         Buscar
       </button>
     </div>

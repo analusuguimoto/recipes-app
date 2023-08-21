@@ -10,9 +10,11 @@ interface RecipeListProps {
 }
 
 function RecipeList({ recipes }: RecipeListProps) {
+  const limitedRecipes = recipes.slice(0, 12);
+
   return (
     <div>
-      {recipes.map((recipe, index) => (
+      {limitedRecipes.map((recipe, index) => (
         <RecipeCard
           key={ recipe.idMeal }
           index={ index }

@@ -1,24 +1,29 @@
-// RecipeContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export interface Recipe {
+export interface Meal {
   idMeal: string;
-  idDrink?: string;
   strMeal: string;
-  strDrink?: string;
   strMealThumb: string;
-  strDrinkThumb?: string;
-  [key: string]: string | undefined;
+}
+
+export interface Drink {
+  idDrink: string;
+  strDrink: string;
+  strDrinkThumb: string;
 }
 
 type RecipeContextType = {
-  searchResults: any;
-  setSearchResults: React.Dispatch<React.SetStateAction<Recipe[]>>;
+  mealResults: Meal[];
+  drinkResults: Drink[];
+  setMealResults: React.Dispatch<React.SetStateAction<Meal[]>>;
+  setDrinkResults: React.Dispatch<React.SetStateAction<Drink[]>>;
 };
 
 const RecipeContext = createContext<RecipeContextType>({
-  searchResults: [],
-  setSearchResults: () => {},
+  mealResults: [],
+  drinkResults: [],
+  setMealResults: () => {},
+  setDrinkResults: () => {},
 });
 
 export function useRecipeContext() {
@@ -30,10 +35,21 @@ type RecipeProviderProps = {
 };
 
 export function RecipeProvider({ children }: RecipeProviderProps) {
-  const [searchResults, setSearchResults] = useState<Recipe[]>([]);
-  console.log('Context Data:', searchResults);
+  const [mealResults, setMealResults] = useState<Meal[]>([]);
+  const [drinkResults, setDrinkResults] = useState<Drink[]>([]);
+
+  console.log('Meal Results:', mealResults);
+  console.log('Drink Results:', drinkResults);
+
   return (
-    <RecipeContext.Provider value={ { searchResults, setSearchResults } }>
+    <RecipeContext.Provider
+      value={ {
+        mealResults,
+        setMealResults,
+        drinkResults,
+        setDrinkResults,
+      } }
+    >
       {children}
     </RecipeContext.Provider>
   );

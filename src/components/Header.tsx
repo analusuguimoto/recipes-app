@@ -1,6 +1,5 @@
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import RecipeList from './RecipeList';
 import SearchBar from './SearchBar';
 
 function Header() {
