@@ -2,10 +2,8 @@ import Header from '../components/Header';
 
 function DoneRecipes() {
   return (
-    <>
-      <Header />
-      <p>Oi, eu sou a DoneRecipes</p>
-    </>
+    <Header title="Done Recipes" iconSearch={ false } iconProfile />
+
   );
 }
 

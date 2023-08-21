@@ -1,8 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import Login from '../components/Login';
 import { renderWithRouter } from './renderWith';
 
 describe('Verifica se a tela de login renderiza corretamente os elementos', () => {
@@ -36,7 +35,7 @@ describe('Verifica se a tela de login renderiza corretamente os elementos', () =
     expect(loginButton).not.toBeDisabled();
 
     await userEvent.click(loginButton);
-    const initialHeader = screen.getByText(/hello world!/i);
-    expect(initialHeader).toBeInTheDocument();
+    expect(screen.getByTestId('profile-top-btn')).toBeInTheDocument();
+    expect(screen.getByTestId('search-top-btn')).toBeInTheDocument();
   });
 });
