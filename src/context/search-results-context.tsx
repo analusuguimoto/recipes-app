@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { fetchApi } from '../helpers/fetchApi';
 
 export interface Meal {
   idMeal: string;
@@ -37,6 +38,20 @@ type RecipeProviderProps = {
 export function RecipeProvider({ children }: RecipeProviderProps) {
   const [mealResults, setMealResults] = useState<Meal[]>([]);
   const [drinkResults, setDrinkResults] = useState<Drink[]>([]);
+
+  const fetchMeals = async () => {
+    const response = await fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    setMealResults(response.meals);
+  };
+  const fetchDrinks = async () => {
+    const response = await fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    setDrinkResults(response.drinks);
+  };
+
+  useEffect(() => {
+    fetchMeals();
+    fetchDrinks();
+  }, []);
 
   console.log('Meal Results:', mealResults);
   console.log('Drink Results:', drinkResults);
