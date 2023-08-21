@@ -36,7 +36,8 @@ describe('Verifica se a tela de login renderiza corretamente os elementos', () =
     expect(loginButton).not.toBeDisabled();
 
     await userEvent.click(loginButton);
-    const initialHeader = screen.getByText(/hello world!/i);
+    const initialHeader = screen.getByTestId('search-input');
+    // screen.findByPlaceholderText(/search-input/i);
     expect(initialHeader).toBeInTheDocument();
   });
 });

@@ -27,6 +27,9 @@ function Login() {
   const handleclick = (event: any) => {
     event.preventDefault();
     navigate('/meals');
+    const emailLS = { email: userEmail };
+    const emailStringfy = JSON.stringify(emailLS);
+    localStorage.setItem('user', emailStringfy);
   };
 
   return (
