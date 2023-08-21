@@ -37,6 +37,5 @@ describe('Verifica se a tela de login renderiza corretamente os elementos', () =
     await userEvent.click(loginButton);
     expect(screen.getByTestId('profile-top-btn')).toBeInTheDocument();
     expect(screen.getByTestId('search-top-btn')).toBeInTheDocument();
-
   });
 });
