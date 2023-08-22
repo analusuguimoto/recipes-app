@@ -1,6 +1,9 @@
+import { useParams } from 'react-router-dom';
+
 function MainScreenDrink() {
+  const { id } = useParams();
   return (
-    <p>Oi, eu sou a MainScreenDrink</p>
+    <p>{id}</p>
   );
 }
 
