@@ -51,17 +51,15 @@ describe('Verifica se o header renderiza corretamente os elementos', () => {
     await userEvent.click(loginButton);
     expect(screen.getByAltText('ícone de pesquisa')).toBeInTheDocument();
     expect(screen.getByAltText('ícone de perfil')).toBeInTheDocument();
-  });
 
-  test('verifica a renderização condicional do bar', async () => {
-    renderWithRouter(<Header title="Drinks" iconProfile iconSearch />);
     const searchButton = screen.getByAltText('ícone de pesquisa');
     expect(searchButton).toBeInTheDocument();
 
     await userEvent.click(searchButton);
-    expect(screen.getAllByTestId('search-input')).toBeInTheDocument();
+    expect(screen.getByText(/ingrediente/i)).toBeInTheDocument();
+    expect(screen.getByTestId('search-input')).toBeInTheDocument();
 
     await userEvent.click(searchButton);
-    expect(screen.getAllByTestId('search-input')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('search-input')).not.toBeInTheDocument();
   });
 });
