@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
 
 interface RecipeListProps {
@@ -13,15 +14,21 @@ function RecipeList({ recipes }: RecipeListProps) {
   const limitedRecipes = recipes.slice(0, 12);
 
   return (
+
     <div>
       {limitedRecipes.map((recipe, index) => (
-        <RecipeCard
+        <Link
+          to={ `/meals/${recipe.idMeal}` }
           key={ recipe.idMeal }
-          index={ index }
-          id={ recipe.idMeal }
-          name={ recipe.strMeal }
-          image={ recipe.strMealThumb }
-        />
+        >
+          <RecipeCard
+            key={ recipe.idMeal }
+            index={ index }
+            id={ recipe.idMeal }
+            name={ recipe.strMeal }
+            image={ recipe.strMealThumb }
+          />
+        </Link>
       ))}
     </div>
   );

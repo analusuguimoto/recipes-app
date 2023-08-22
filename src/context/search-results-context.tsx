@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { fetchApi } from '../helpers/fetchApi';
+import { DRINKS_LINK, MEALS_LINK } from '../helpers/links';
 
 export interface Meal {
   idMeal: string;
@@ -17,6 +19,10 @@ type RecipeContextType = {
   drinkResults: Drink[];
   setMealResults: React.Dispatch<React.SetStateAction<Meal[]>>;
   setDrinkResults: React.Dispatch<React.SetStateAction<Drink[]>>;
+  updateMealState: (newState: Meal[]) => void;
+  updateDrinkState: (newState: Drink[]) => void;
+  fetchMeals: () => void;
+  fetchDrinks: () => void;
 };
 
 const RecipeContext = createContext<RecipeContextType>({
@@ -24,6 +30,10 @@ const RecipeContext = createContext<RecipeContextType>({
   drinkResults: [],
   setMealResults: () => {},
   setDrinkResults: () => {},
+  updateMealState: () => {},
+  updateDrinkState: () => {},
+  fetchMeals: () => {},
+  fetchDrinks: () => {},
 });
 
 export function useRecipeContext() {
@@ -38,6 +48,28 @@ export function RecipeProvider({ children }: RecipeProviderProps) {
   const [mealResults, setMealResults] = useState<Meal[]>([]);
   const [drinkResults, setDrinkResults] = useState<Drink[]>([]);
 
+  const fetchMeals = async () => {
+    const response = await fetchApi(MEALS_LINK);
+    setMealResults(response.meals);
+  };
+  const fetchDrinks = async () => {
+    const response = await fetchApi(DRINKS_LINK);
+    setDrinkResults(response.drinks);
+  };
+
+  const updateMealState = (newState: Meal[]) => {
+    setMealResults(newState);
+  };
+
+  const updateDrinkState = (newState: Drink[]) => {
+    setDrinkResults(newState);
+  };
+
+  useEffect(() => {
+    fetchMeals();
+    fetchDrinks();
+  }, []);
+
   console.log('Meal Results:', mealResults);
   console.log('Drink Results:', drinkResults);
 
@@ -48,6 +80,10 @@ export function RecipeProvider({ children }: RecipeProviderProps) {
         setMealResults,
         drinkResults,
         setDrinkResults,
+        updateMealState,
+        updateDrinkState,
+        fetchMeals,
+        fetchDrinks,
       } }
     >
       {children}
