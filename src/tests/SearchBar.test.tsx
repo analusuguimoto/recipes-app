@@ -1,11 +1,11 @@
 import React from 'react';
-import { vi } from 'vitest';
+// import { vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom'; // Import MemoryRouter
-import userEvent from '@testing-library/user-event';
+// import userEvent from '@testing-library/user-event';
 import SearchBar from '../components/SearchBar';
-import { mealsData } from '../MockDataResults';
-import * as api from '../api'; // Import the actual API module
+// import { mealsData } from '../MockDataResults';
+// import * as api from '../api'; // Import the actual API module
 
 describe('SearchBar component', () => {
   it('should display search input and radio buttons', () => {

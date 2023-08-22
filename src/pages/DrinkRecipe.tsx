@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '../components/Header';
 import { useRecipeContext } from '../context/search-results-context';
 import DrinkRecipeList from '../components/DrinkRecipeList';
@@ -8,7 +7,7 @@ function DrinkRecipe() {
 
   return (
     <>
-      <Header />
+      <Header title="Drinks" iconProfile iconSearch />
       {drinkResults.length > 0 ? (
         <DrinkRecipeList drinks={ drinkResults } />
       ) : (

@@ -7,7 +7,7 @@ function FoodRecipe() {
 
   return (
     <>
-      <Header />
+      <Header title="Meals" iconProfile iconSearch />
       {mealResults.length > 0 ? (
         <RecipeList recipes={ mealResults } />
       ) : (
