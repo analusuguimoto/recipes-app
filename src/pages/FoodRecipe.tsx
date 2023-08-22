@@ -1,5 +1,5 @@
-import Footer from '../components/Footer';
 import { useEffect, useState } from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import RecipeList from '../components/MealRecipeList';
 import { useRecipeContext } from '../context/search-results-context';
