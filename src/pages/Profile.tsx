@@ -4,8 +4,7 @@ import Footer from '../components/Footer';
 function Profile() {
   return (
     <>
-      <Header />
-      <p>Oi, eu sou a Profile</p>
+      <Header title="Profile" iconSearch={ false } iconProfile />
       <Footer />
     </>
   );
