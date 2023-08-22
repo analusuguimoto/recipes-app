@@ -34,7 +34,7 @@ function DrinkRecipe() {
 
   return (
     <>
-      <Header />
+      <Header title="Drinks" iconProfile iconSearch />
       <div>
         <button
           data-testid="All-category-filter"

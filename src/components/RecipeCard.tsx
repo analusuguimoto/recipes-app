@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface RecipeCardProps {
-  id: any;
+  // id: any;
   name: any;
   image: any;
   index: any;
 }
 
-function RecipeCard({ id, name, image, index }: RecipeCardProps) {
+function RecipeCard({ name, image, index }: RecipeCardProps) {
   return (
     <div data-testid={ `${index}-recipe-card` } style={ { cursor: 'pointer' } }>
       <img

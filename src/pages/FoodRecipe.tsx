@@ -34,7 +34,7 @@ function FoodRecipe() {
 
   return (
     <>
-      <Header />
+      <Header title="Meals" iconProfile iconSearch />
       <div>
         <button
           data-testid="All-category-filter"
@@ -53,7 +53,6 @@ function FoodRecipe() {
             </button>
           )))}
       </div>
-
       {mealResults.length > 0 ? (
         <RecipeList recipes={ mealResults } />
       ) : (

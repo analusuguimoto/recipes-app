@@ -2,10 +2,7 @@ import Header from '../components/Header';
 
 function FavoriteRecipe() {
   return (
-    <>
-      <Header />
-      <p>Oi, eu sou a FavoriteRecipe</p>
-    </>
+    <Header title="Favorite Recipes" iconSearch={ false } iconProfile />
   );
 }
 
