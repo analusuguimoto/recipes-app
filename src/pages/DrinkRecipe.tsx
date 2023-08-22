@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { useRecipeContext } from '../context/search-results-context';
 import DrinkRecipeList from '../components/DrinkRecipeList';
+import Footer from '../components/Footer';
 import { fetchApi } from '../helpers/fetchApi';
 import { CATEGORY_DRINKS_LINK, FILTER_DRINKS_LINK } from '../helpers/links';
 import { CategoryType } from '../types';
@@ -58,6 +59,7 @@ function DrinkRecipe() {
       ) : (
         <p>Nenhum resultado encontrado para bebidas.</p>
       )}
+      <Footer />
     </>
   );
 }
