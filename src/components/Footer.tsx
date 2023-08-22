@@ -2,7 +2,7 @@ import '../footer.css';
 
 function Footer() {
   return (
-    <footer data-testid="footer">
+    <footer data-testid="footer" className="footer">
       <a href="/drinks">
         <img
           src="/src/images/drinkIcon.svg"
