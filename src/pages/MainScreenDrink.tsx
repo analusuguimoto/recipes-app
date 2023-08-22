@@ -19,8 +19,22 @@ function MainScreenDrink() {
 
   return (
     <>
-      <h2>{ recipe?.strDrink }</h2>
-      <p>{ recipe?.strAlcoholic }</p>
+      <h1 data-testid="recipe-category">{ recipe?.strCategory }</h1>
+      <h2 data-testid="recipe-title">{ recipe?.strDrink }</h2>
+      <img
+        data-testid="recipe-photo"
+        src={ recipe?.strDrinkThumb }
+        alt={ recipe?.strDrink }
+        style={ { maxWidth: '200px', height: 'auto' } }
+      />
+      <div>
+        <h3>Ingredients</h3>
+
+      </div>
+      <div>
+        <h3>Instructions</h3>
+        <p data-testid="instructions">{ recipe?.strInstructions }</p>
+      </div>
     </>
   );
 }
