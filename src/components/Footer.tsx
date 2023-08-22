@@ -9,7 +9,6 @@ function Footer() {
           alt="Bebida"
           data-testid="drinks-bottom-btn"
         />
-        {/* teste */}
       </a>
       <a href="/meals">
         <img
