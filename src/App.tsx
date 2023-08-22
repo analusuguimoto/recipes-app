@@ -13,12 +13,12 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={ <Login /> } />
-      <Route path="/meals/:id-da-receita" element={ <MainScreenFood /> } />
-      <Route path="/drinks/:id-da-receita" element={ <MainScreenDrink /> } />
-      <Route path="/meals/:id-da-receita/in-progress" element={ <DetailsFood /> } />
-      <Route path="/drinks/:id-da-receita/in-progress" element={ <DetailsDrink /> } />
       <Route path="/meals" element={ <Recipes /> } />
       <Route path="/drinks" element={ <Recipes /> } />
+      <Route path="/meals/:id" element={ <MainScreenFood /> } />
+      <Route path="/drinks/:id" element={ <MainScreenDrink /> } />
+      <Route path="/meals/:id/in-progress" element={ <DetailsFood /> } />
+      <Route path="/drinks/:id/in-progress" element={ <DetailsDrink /> } />
       <Route path="/profile" element={ <Profile /> } />
       <Route path="/done-recipes" element={ <DoneRecipes /> } />
       <Route path="/favorite-recipes" element={ <FavoriteRecipe /> } />
