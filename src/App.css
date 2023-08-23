@@ -66,3 +66,24 @@
     transform: rotate(-10deg);
   }
 }
+
+
+.recommendation-carousel {
+  display: flex;
+  overflow-x: scroll;
+  gap: 20px;
+  padding: 10px;
+  width: 100%;
+}
+
+.recommendation-card {
+  flex: 0 0 calc(50% - 10px);
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.recommendation-image {
+  max-width: 100%;
+  height: auto;
+}
+
