@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ID_DRINKS_LINK } from '../helpers/links';
 import { fetchApi } from '../helpers/fetchApi';
+import MealRecommendationCard from '../components/MealRecommendationCard';
+import { Meal } from '../context/search-results-context';
+import '../App.css';
 import { DrinkType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
@@ -11,6 +14,12 @@ function MainScreenDrink() {
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
   const [linkCopied, setLinkCopied] = useState(false);
   const currentUrl = window.location.href;
+  const [mealRecommendations, setMealRecommendations] = useState<Meal[]>([]);
+
+  const fetchRecommendations = async () => {
+    const response = await fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    setMealRecommendations(response.meals);
+  };
 
   const fetchRecipe = async () => {
     const response = await fetchApi(`${ID_DRINKS_LINK}${id}`);
@@ -19,6 +28,7 @@ function MainScreenDrink() {
 
   useEffect(() => {
     fetchRecipe();
+    fetchRecommendations();
   }, []);
 
   const handleShareBtn = () => {
@@ -63,6 +73,19 @@ function MainScreenDrink() {
       <div>
         <h3>Instructions</h3>
         <p data-testid="instructions">{ drinkRecipe?.strInstructions }</p>
+      </div>
+      <div>
+        <h3>Recommendations</h3>
+        <div className="recommendation-carousel">
+          {mealRecommendations.slice(0, 6).map((meal, index) => (
+            <MealRecommendationCard
+              key={ meal.idMeal }
+              recipe={ meal }
+              index={ index }
+              image={ meal.strMealThumb }
+            />
+          ))}
+        </div>
       </div>
     </>
   );

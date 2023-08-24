@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_MEALS_LINK } from '../helpers/links';
 import { useRecipeContext } from '../context/search-results-context';
+import { Drink } from '../context/search-results-context';
+import DrinkRecommendationCard from '../components/DrinkRecommendationCard';
+import '../App.css';
 import { MealType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
@@ -12,6 +15,12 @@ function MainScreenFood() {
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [linkCopied, setLinkCopied] = useState(false);
   const currentUrl = window.location.href;
+  const [drinkRecommendations, setDrinkRecommendations] = useState<Drink[]>([]);
+
+  const fetchRecommendations = async () => {
+    const response = await fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    setDrinkRecommendations(response.drinks);
+  };
 
   const fetchRecipe = async () => {
     const response = await fetchApi(`${ID_MEALS_LINK}${id}`);
@@ -20,6 +29,7 @@ function MainScreenFood() {
 
   useEffect(() => {
     fetchRecipe();
+    fetchRecommendations();
   }, []);
 
   const handleShareBtn = () => {
@@ -66,6 +76,19 @@ function MainScreenFood() {
       </div>
       <div>
         { mealRecipe?.strYoutube ? <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${mealRecipe?.strYoutube.split('=')[1]}` } /> : null }
+      </div>
+      <div>
+        <h3>Recommendations</h3>
+        <div className="recommendation-carousel">
+          {drinkRecommendations.slice(0, 6).map((recommendation, index) => (
+            <DrinkRecommendationCard
+              key={ recommendation.idDrink }
+              recommendation={ recommendation }
+              index={ index }
+              image={ recommendation.strDrinkThumb }
+            />
+          ))}
+        </div>
       </div>
     </>
   );
