@@ -54,7 +54,7 @@ function MainScreenFood() {
         <div className="recommendation-carousel">
           {drinkRecommendations.slice(0, 6).map((recommendation, index) => (
             <DrinkRecommendationCard
-              key={ index }
+              key={ recommendation.idDrink }
               recommendation={ recommendation }
               index={ index }
               image={ recommendation.strDrinkThumb }
