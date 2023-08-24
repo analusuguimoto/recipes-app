@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { fetchApi } from '../helpers/fetchApi';
 import { DRINKS_LINK, MEALS_LINK } from '../helpers/links';
+import { DrinkType, MealType } from '../types';
 
 export interface Meal {
   idMeal: string;
@@ -47,6 +48,8 @@ type RecipeProviderProps = {
 export function RecipeProvider({ children }: RecipeProviderProps) {
   const [mealResults, setMealResults] = useState<Meal[]>([]);
   const [drinkResults, setDrinkResults] = useState<Drink[]>([]);
+  const [mealRecipe, setMealRecipe] = useState<MealType>();
+  const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
 
   const fetchMeals = async () => {
     const response = await fetchApi(MEALS_LINK);
