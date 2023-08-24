@@ -3,10 +3,19 @@ import { useParams } from 'react-router-dom';
 import { ID_DRINKS_LINK } from '../helpers/links';
 import { fetchApi } from '../helpers/fetchApi';
 import { DrinkType } from '../types';
+import MealRecommendationCard from '../components/MealRecommendationCard';
+import { Meal } from '../context/search-results-context';
+import '../App.css';
 
 function MainScreenDrink() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<DrinkType>();
+  const [mealRecommendations, setMealRecommendations] = useState<Meal[]>([]);
+
+  const fetchRecommendations = async () => {
+    const response = await fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    setMealRecommendations(response.meals);
+  };
 
   const fetchRecipe = async () => {
     const response = await fetchApi(`${ID_DRINKS_LINK}${id}`);
@@ -15,6 +24,7 @@ function MainScreenDrink() {
   };
   useEffect(() => {
     fetchRecipe();
+    fetchRecommendations();
   }, []);
 
   return (
@@ -34,6 +44,19 @@ function MainScreenDrink() {
       <div>
         <h3>Instructions</h3>
         <p data-testid="instructions">{ recipe?.strInstructions }</p>
+      </div>
+      <div>
+        <h3>Recommendations</h3>
+        <div className="recommendation-carousel">
+          {mealRecommendations.slice(0, 6).map((meal, index) => (
+            <MealRecommendationCard
+              key={ meal.idMeal }
+              recipe={ meal }
+              index={ index }
+              image={ meal.strMealThumb }
+            />
+          ))}
+        </div>
       </div>
     </>
   );

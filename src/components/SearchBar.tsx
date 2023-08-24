@@ -29,7 +29,6 @@ function SearchBar() {
       return jsonData;
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Handle error
     }
   };
 
