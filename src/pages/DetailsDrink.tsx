@@ -11,6 +11,7 @@ function DetailsDrink() {
   const { id } = useParams<{ id: string }>();
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
   const [linkCopied, setLinkCopied] = useState(false);
+  const [ingredients, setIngredients] = useState<string[]>([]);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 
@@ -22,6 +23,25 @@ function DetailsDrink() {
   useEffect(() => {
     fetchRecipe();
   }, []);
+
+  useEffect(() => {
+    const ingredientsArray = [] as string[];
+    if (drinkRecipe) {
+      const maxIngredientes = Object.keys(drinkRecipe)
+        .filter((chave) => chave.startsWith('strIngredient')).length;
+      for (let i = 1; i <= maxIngredientes; i++) {
+        const ingredientChave = `strIngredient${i}`;
+        const medidaChave = `strMeasure${i}`;
+        const ingrediente = drinkRecipe[ingredientChave];
+        const medida = drinkRecipe[medidaChave];
+
+        if (medida && ingrediente) {
+          ingredientsArray.push(`${medida} of ${ingrediente}`);
+        }
+      }
+    }
+    setIngredients(ingredientsArray);
+  }, [drinkRecipe]);
 
   const handleShareBtn = () => {
     navigator.clipboard.writeText(newUrl)
@@ -60,10 +80,23 @@ function DetailsDrink() {
       />
       <div>
         <h3>Ingredients</h3>
-        <input type="checkbox" name="ingredient" id="" />
-        1.
-        <input type="checkbox" name="" id="" />
-        2.
+        <ul>
+          {ingredients.map((ingredient, i) => (
+            <li key={ i }>
+              <label
+                htmlFor="ingredient"
+                data-testid={ `${i}-ingredient-step` }
+                key={ i }
+              >
+                <input
+                  type="checkbox"
+                  id="ingredient"
+                />
+                {ingredient}
+              </label>
+            </li>
+          ))}
+        </ul>
       </div>
       <div>
         <h3>Instructions</h3>
