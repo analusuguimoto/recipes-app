@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import ButtonRecipeStart from '../components/ButtonRecipeStart';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_DRINKS_LINK } from '../helpers/links';
 import { DrinkType } from '../types';
@@ -32,6 +33,7 @@ function DetailsDrink() {
 
   return (
     <>
+      =======
       <nav>
         <h1 data-testid="recipe-category">{ drinkRecipe?.strCategory }</h1>
         <div>
@@ -72,6 +74,7 @@ function DetailsDrink() {
       >
         Finish Recipe
       </button>
+      <ButtonRecipeStart page="Drink" />
     </>
   );
 }
