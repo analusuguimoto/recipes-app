@@ -2,6 +2,29 @@ export type CategoryType = {
   strCategory: string;
 };
 
+export type DoneRecipesLocal = {
+
+  id: string,
+  type: string,
+  nationality: string,
+  category: string,
+  alcoholicOrNot: string,
+  name: string,
+  image: string,
+  doneDate: string,
+  tags: string,
+
+};
+
+export type InProgressRecipes = {
+  drinks: {
+    idDrink: string[],
+  },
+  meals: {
+    idMeal: string[],
+  }
+};
+
 export type DrinkType = {
   idDrink: string;
   strAlcoholic: string;
