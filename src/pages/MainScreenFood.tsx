@@ -58,7 +58,6 @@ function MainScreenFood() {
       })
       .catch((err) => console.error('Erro ao copiar: ', err));
   };
-  console.log(ingredients);
   return (
     <>
       <nav>
