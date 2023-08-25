@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ID_DRINKS_LINK } from '../helpers/links';
+import { ID_DRINKS_LINK, MEALS_LINK } from '../helpers/links';
 import { fetchApi } from '../helpers/fetchApi';
 import MealRecommendationCard from '../components/MealRecommendationCard';
 import { Meal } from '../context/search-results-context';
 import '../App.css';
-import { DrinkType } from '../types';
+import { DrinkType, IngredientsType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 
@@ -15,9 +15,10 @@ function MainScreenDrink() {
   const [linkCopied, setLinkCopied] = useState(false);
   const currentUrl = window.location.href;
   const [mealRecommendations, setMealRecommendations] = useState<Meal[]>([]);
+  const [ingredients, setIngredients] = useState<string[]>([]);
 
   const fetchRecommendations = async () => {
-    const response = await fetchApi('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const response = await fetchApi(MEALS_LINK);
     setMealRecommendations(response.meals);
   };
 
@@ -30,6 +31,25 @@ function MainScreenDrink() {
     fetchRecipe();
     fetchRecommendations();
   }, []);
+
+  useEffect(() => {
+    const ingredientsArray = [] as string[];
+    if (drinkRecipe) {
+      const maxIngredientes = Object.keys(drinkRecipe)
+        .filter((chave) => chave.startsWith('strIngredient')).length;
+      for (let i = 1; i <= maxIngredientes; i++) {
+        const ingredientChave = `strIngredient${i}`;
+        const medidaChave = `strMeasure${i}`;
+        const ingrediente = drinkRecipe[ingredientChave];
+        const medida = drinkRecipe[medidaChave];
+
+        if (medida && ingrediente) {
+          ingredientsArray.push(`${medida} of ${ingrediente}`);
+        }
+      }
+    }
+    setIngredients(ingredientsArray);
+  }, [drinkRecipe]);
 
   const handleShareBtn = () => {
     navigator.clipboard.writeText(currentUrl)
@@ -68,7 +88,16 @@ function MainScreenDrink() {
       <p data-testid="recipe-category">{ drinkRecipe?.strAlcoholic }</p>
       <div>
         <h3>Ingredients</h3>
-
+        <ul>
+          {ingredients.map((ingredient, i) => (
+            <li
+              key={ i }
+              data-testid={ `${i}-ingredient-name-and-measure` }
+            >
+              {ingredient}
+            </li>
+          ))}
+        </ul>
       </div>
       <div>
         <h3>Instructions</h3>
