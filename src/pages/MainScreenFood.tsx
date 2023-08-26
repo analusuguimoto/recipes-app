@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ButtonRecipeStart from '../components/ButtonRecipeStart';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_MEALS_LINK } from '../helpers/links';
 import { useRecipeContext, Drink } from '../context/search-results-context';
@@ -89,6 +90,7 @@ function MainScreenFood() {
           ))}
         </div>
       </div>
+      <ButtonRecipeStart page="Meal" />
     </>
   );
 }
