@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_DRINKS_LINK } from '../helpers/links';
 import { DrinkType } from '../types';
@@ -18,6 +18,12 @@ function DetailsDrinkInProgress() {
     const response = await fetchApi(`${ID_DRINKS_LINK}${id}`);
     setDrinkRecipe(response.drinks[0]);
   };
+
+  // salva a receita no local storage, descomentar após o fim da implementação da página
+  /* const handleSaveInLocalStorage = () => {
+    const storage = JSON.stringify(drinkRecipe);
+    localStorage.setItem('doneRecipes', storage);
+  }; */
 
   useEffect(() => {
     fetchRecipe();
@@ -101,11 +107,14 @@ function DetailsDrinkInProgress() {
         <h3>Instructions</h3>
         <p data-testid="instructions">{drinkRecipe?.strInstructions}</p>
       </div>
-      <button
-        data-testid="finish-recipe-btn"
-      >
-        Finish Recipe
-      </button>
+      <Link to="/done-recipes">
+        <button
+         /* onClick={ handleSaveInLocalStorage } */
+          data-testid="finish-recipe-btn"
+        >
+          Finish Recipe
+        </button>
+      </Link>
     </>
   );
 }

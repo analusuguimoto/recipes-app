@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_MEALS_LINK } from '../helpers/links';
 import { MealType } from '../types';
@@ -18,6 +18,12 @@ function DetailsFoodInProgress() {
     const response = await fetchApi(`${ID_MEALS_LINK}${id}`);
     setMealRecipe(response.meals[0]);
   };
+
+  // salva a receita no local storage, descomentar após a implementação da página
+  /* const handleSaveInLocalStorage = () => {
+    const storage = JSON.stringify(mealRecipe);
+    localStorage.setItem('doneRecipes', storage);
+  }; */
 
   useEffect(() => {
     fetchRecipe();
@@ -103,11 +109,14 @@ function DetailsFoodInProgress() {
       <div>
         {mealRecipe?.strYoutube ? <iframe title="recipe video" data-testid="video" width="200" height="175" src={ `https://www.youtube.com/embed/${mealRecipe?.strYoutube.split('=')[1]}` } /> : null}
       </div>
-      <button
-        data-testid="finish-recipe-btn"
-      >
-        Finish Recipe
-      </button>
+      <Link to="/done-recipes">
+        <button
+          data-testid="finish-recipe-btn"
+          /* onClick={ handleSaveInLocalStorage } */
+        >
+          Finish Recipe
+        </button>
+      </Link>
     </>
   );
 }

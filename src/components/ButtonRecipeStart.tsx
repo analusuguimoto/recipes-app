@@ -34,7 +34,7 @@ function ButtonRecipeStart({ page }: PropType) {
   if (page === 'Meal') {
     return (
       recipeInProgress.meals.idMeal.length !== 0 ? (
-        <Link to="/meals/:id-da-receita/in-progress">
+        <Link to="/meals/:id/in-progress">
           <button
             style={ { position: 'fixed', bottom: '0px' } }
             data-testid="start-recipe-btn"
@@ -56,7 +56,7 @@ function ButtonRecipeStart({ page }: PropType) {
   if (page === 'Drink') {
     return (
       recipeInProgress.drinks.idDrink.length !== 0 ? (
-        <Link to="/drinks/:id-da-receita/in-progress">
+        <Link to="/drinks/:id/in-progress">
           <button
             style={ { position: 'fixed', bottom: '0px' } }
             data-testid="start-recipe-btn"
