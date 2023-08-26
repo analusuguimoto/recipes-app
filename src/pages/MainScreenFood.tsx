@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ButtonRecipeStart from '../components/ButtonRecipeStart';
 import { fetchApi } from '../helpers/fetchApi';
-import { ID_MEALS_LINK } from '../helpers/links';
-import { useRecipeContext, Drink } from '../context/search-results-context';
+import { DRINKS_LINK, ID_MEALS_LINK } from '../helpers/links';
+import { Drink } from '../context/search-results-context';
 import DrinkRecommendationCard from '../components/DrinkRecommendationCard';
 import '../App.css';
-import { MealType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
+import { MealType } from '../types';
 
 function MainScreenFood() {
   const { id } = useParams<{ id: string }>();
@@ -16,9 +16,10 @@ function MainScreenFood() {
   const [linkCopied, setLinkCopied] = useState(false);
   const currentUrl = window.location.href;
   const [drinkRecommendations, setDrinkRecommendations] = useState<Drink[]>([]);
+  const [ingredients, setIngredients] = useState<string[]>([]);
 
   const fetchRecommendations = async () => {
-    const response = await fetchApi('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const response = await fetchApi(DRINKS_LINK);
     setDrinkRecommendations(response.drinks);
   };
 
@@ -32,6 +33,25 @@ function MainScreenFood() {
     fetchRecommendations();
   }, []);
 
+  useEffect(() => {
+    const ingredientsArray = [] as string[];
+    if (mealRecipe) {
+      const maxIngredientes = Object.keys(mealRecipe)
+        .filter((chave) => chave.startsWith('strIngredient')).length;
+      for (let i = 1; i <= maxIngredientes; i++) {
+        const ingredientChave = `strIngredient${i}`;
+        const medidaChave = `strMeasure${i}`;
+        const ingrediente = mealRecipe[ingredientChave];
+        const medida = mealRecipe[medidaChave];
+
+        if (medida && ingrediente) {
+          ingredientsArray.push(`${medida} of ${ingrediente}`);
+        }
+      }
+    }
+    setIngredients(ingredientsArray);
+  }, [mealRecipe]);
+
   const handleShareBtn = () => {
     navigator.clipboard.writeText(currentUrl)
       .then(() => {
@@ -39,7 +59,6 @@ function MainScreenFood() {
       })
       .catch((err) => console.error('Erro ao copiar: ', err));
   };
-
   return (
     <>
       <nav>
@@ -68,7 +87,16 @@ function MainScreenFood() {
       />
       <div>
         <h3>Ingredients</h3>
-
+        <ul>
+          {ingredients.map((ingredient, i) => (
+            <li
+              key={ i }
+              data-testid={ `${i}-ingredient-name-and-measure` }
+            >
+              {ingredient}
+            </li>
+          ))}
+        </ul>
       </div>
       <div>
         <h3>Instructions</h3>
