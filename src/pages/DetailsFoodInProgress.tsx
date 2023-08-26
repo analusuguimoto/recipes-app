@@ -20,10 +20,10 @@ function DetailsFoodInProgress() {
   };
 
   // salva a receita no local storage, descomentar após a implementação da página
-  const handleSaveInLocalStorage = () => {
+  /* const handleSaveInLocalStorage = () => {
     const storage = JSON.stringify(mealRecipe);
     localStorage.setItem('doneRecipes', storage);
-  };
+  }; */
 
   useEffect(() => {
     fetchRecipe();
@@ -112,7 +112,7 @@ function DetailsFoodInProgress() {
       <Link to="/done-recipes">
         <button
           data-testid="finish-recipe-btn"
-          onClick={ handleSaveInLocalStorage }
+          /* onClick={ handleSaveInLocalStorage } */
         >
           Finish Recipe
         </button>

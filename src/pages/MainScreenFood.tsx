@@ -8,7 +8,6 @@ import '../App.css';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 import { MealType } from '../types';
-import ButtonRecipeStart from '../components/ButtonRecipeStart';
 
 function MainScreenFood() {
   const { id } = useParams<{ id: string }>();
@@ -118,7 +117,6 @@ function MainScreenFood() {
           ))}
         </div>
       </div>
-      <ButtonRecipeStart page="Meal" />
     </>
   );
 }
