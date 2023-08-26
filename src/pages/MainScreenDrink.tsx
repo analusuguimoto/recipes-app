@@ -8,7 +8,7 @@ import '../App.css';
 import { DrinkType, IngredientsType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
-// import ButtonRecipeStart from '../components/ButtonRecipeStart';
+import ButtonRecipeStart from '../components/ButtonRecipeStart';
 
 function MainScreenDrink() {
   const { id } = useParams<{ id: string }>();
@@ -117,7 +117,7 @@ function MainScreenDrink() {
           ))}
         </div>
       </div>
-      {/* <ButtonRecipeStart page="Drink" /> */}
+      <ButtonRecipeStart page="Drink" />
     </>
   );
 }

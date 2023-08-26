@@ -1,13 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
-import MainScreenFood from './pages/MainScreenFood';
-import MainScreenDrink from './pages/MainScreenDrink';
-import DetailsFoodInProgress from './pages/DetailsFoodInProgress';
-import DetailsDrinkInProgress from './pages/DetailsDrinkInProgress';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipe from './pages/FavoriteRecipe';
 import Recipes from './pages/Recipes';
+import RecipeDetail from './pages/RecipeDetails';
+import RecipeInProgress from './pages/RecipeInProgress';
 
 function App() {
   return (
@@ -15,10 +13,10 @@ function App() {
       <Route path="/" element={ <Login /> } />
       <Route path="/meals" element={ <Recipes /> } />
       <Route path="/drinks" element={ <Recipes /> } />
-      <Route path="/meals/:id" element={ <MainScreenFood /> } />
-      <Route path="/drinks/:id" element={ <MainScreenDrink /> } />
-      <Route path="/meals/:id/in-progress" element={ <DetailsFoodInProgress /> } />
-      <Route path="/drinks/:id/in-progress" element={ <DetailsDrinkInProgress /> } />
+      <Route path="/meals/:id" element={ <RecipeDetail /> } />
+      <Route path="/drinks/:id" element={ <RecipeDetail /> } />
+      <Route path="/meals/:id/in-progress" element={ <RecipeInProgress /> } />
+      <Route path="/drinks/:id/in-progress" element={ <RecipeInProgress /> } />
       <Route path="/profile" element={ <Profile /> } />
       <Route path="/done-recipes" element={ <DoneRecipes /> } />
       <Route path="/favorite-recipes" element={ <FavoriteRecipe /> } />
