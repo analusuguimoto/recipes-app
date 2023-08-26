@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ButtonRecipeStart from '../components/ButtonRecipeStart';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_DRINKS_LINK } from '../helpers/links';
 import { DrinkType } from '../types';
@@ -107,7 +106,6 @@ function DetailsDrink() {
       >
         Finish Recipe
       </button>
-      <ButtonRecipeStart page="Drink" />
     </>
   );
 }
