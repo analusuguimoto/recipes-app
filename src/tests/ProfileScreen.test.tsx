@@ -1,6 +1,7 @@
 import React from 'react';
 import { vi } from 'vitest';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { screen, waitFor } from '@testing-library/react';
 import { renderWithRouter } from './renderWith';
 import Profile from '../pages/Profile';
 
@@ -23,7 +24,7 @@ describe('Profile screen', () => {
     renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
 
     const doneButton = screen.getByTestId('profile-done-btn');
-    fireEvent.click(doneButton);
+    userEvent.click(doneButton);
 
     waitFor(() => {
       expect(window.location.pathname).toBe('/done-recipes');
@@ -34,7 +35,7 @@ describe('Profile screen', () => {
     renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
 
     const favoriteButton = screen.getByTestId('profile-favorite-btn');
-    fireEvent.click(favoriteButton);
+    userEvent.click(favoriteButton);
 
     waitFor(() => {
       expect(window.location.pathname).toBe('/favorite-recipes');
@@ -42,27 +43,16 @@ describe('Profile screen', () => {
   });
 
   it('clears localStorage and navigates to Login screen on Logout button click', () => {
-    const mockLocalStorage: Record<string, string> = {};
-    Object.defineProperty(window, 'localStorage', {
-      value: {
-        getItem: (key: string) => mockLocalStorage[key] || null,
-        setItem: (key: string, value: string) => {
-          mockLocalStorage[key] = value;
-        },
-        removeItem: (key: string) => {
-          delete mockLocalStorage[key];
-        },
-      },
-      writable: true,
-    });
+    const mockUser = { email: 'test@example.com' };
+    localStorage.setItem('user', JSON.stringify(mockUser));
 
     renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
 
     const logoutButton = screen.getByTestId('profile-logout-btn');
-    fireEvent.click(logoutButton);
+    userEvent.click(logoutButton);
 
     waitFor(() => {
-      expect(localStorage.getItem('user')).toBeUndefined();
+      expect(localStorage.getItem('user')).toBeNull();
       expect(window.location.pathname).toBe('/');
     });
   });
