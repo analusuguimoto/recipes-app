@@ -1,0 +1,86 @@
+import React from 'react';
+import { vi } from 'vitest';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { renderWithRouter } from './renderWith';
+import Profile from '../pages/Profile';
+
+describe('Profile screen', () => {
+  it('renders user email and buttons', () => {
+    renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
+
+    const emailElement = screen.getByTestId('profile-email');
+    const doneButton = screen.getByTestId('profile-done-btn');
+    const favoriteButton = screen.getByTestId('profile-favorite-btn');
+    const logoutButton = screen.getByTestId('profile-logout-btn');
+
+    expect(emailElement).toBeInTheDocument();
+    expect(doneButton).toBeInTheDocument();
+    expect(favoriteButton).toBeInTheDocument();
+    expect(logoutButton).toBeInTheDocument();
+  });
+
+  it('navigates to Done Recipes screen on Done Recipes button click', () => {
+    renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
+
+    const doneButton = screen.getByTestId('profile-done-btn');
+    fireEvent.click(doneButton);
+
+    waitFor(() => {
+      expect(window.location.pathname).toBe('/done-recipes');
+    });
+  });
+
+  it('navigates to Favorite Recipes screen on Favorite Recipes button click', () => {
+    renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
+
+    const favoriteButton = screen.getByTestId('profile-favorite-btn');
+    fireEvent.click(favoriteButton);
+
+    waitFor(() => {
+      expect(window.location.pathname).toBe('/favorite-recipes');
+    });
+  });
+
+  it('clears localStorage and navigates to Login screen on Logout button click', () => {
+    const mockLocalStorage: Record<string, string> = {};
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: (key: string) => mockLocalStorage[key] || null,
+        setItem: (key: string, value: string) => {
+          mockLocalStorage[key] = value;
+        },
+        removeItem: (key: string) => {
+          delete mockLocalStorage[key];
+        },
+      },
+      writable: true,
+    });
+
+    renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
+
+    const logoutButton = screen.getByTestId('profile-logout-btn');
+    fireEvent.click(logoutButton);
+
+    waitFor(() => {
+      expect(localStorage.getItem('user')).toBeUndefined();
+      expect(window.location.pathname).toBe('/');
+    });
+  });
+
+  it('displays user email from localStorage', async () => {
+    const mockStoredUser = { email: 'test@example.com' };
+    const localStorageMock = {
+      getItem: vi.fn(() => JSON.stringify(mockStoredUser)),
+    };
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageMock,
+      writable: true,
+    });
+
+    renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
+
+    const profileEmail = await screen.findByTestId('profile-email');
+    expect(profileEmail).toBeInTheDocument();
+    expect(profileEmail.textContent).toBe(mockStoredUser.email);
+  });
+});
