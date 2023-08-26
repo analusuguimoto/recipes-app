@@ -6,7 +6,7 @@ import { MealType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 
-function DetailsFood() {
+function DetailsFoodInProgress() {
   const { id } = useParams<{ id: string }>();
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [linkCopied, setLinkCopied] = useState(false);
@@ -112,4 +112,4 @@ function DetailsFood() {
   );
 }
 
-export default DetailsFood;
+export default DetailsFoodInProgress;

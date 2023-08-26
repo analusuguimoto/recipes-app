@@ -6,7 +6,7 @@ import { DrinkType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 
-function DetailsDrink() {
+function DetailsDrinkInProgress() {
   const { id } = useParams<{ id: string }>();
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
   const [linkCopied, setLinkCopied] = useState(false);
@@ -110,4 +110,4 @@ function DetailsDrink() {
   );
 }
 
-export default DetailsDrink;
+export default DetailsDrinkInProgress;
