@@ -5,7 +5,7 @@ function RecipeDetail() {
   const path = window.location.pathname;
   return (
     <div>
-      { path === '/meals/:id' ? <MainScreenFood /> : <MainScreenDrink /> }
+      { path === '/meals/:id-da-receita' ? <MainScreenFood /> : <MainScreenDrink /> }
     </div>
   );
 }

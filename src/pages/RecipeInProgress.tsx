@@ -5,7 +5,7 @@ function RecipeInProgress() {
   const path = window.location.pathname;
   return (
     <div>
-      { path === '/meals/:id/in-progress'
+      { path === '/meals/:id-da-receita/in-progress'
         ? <DetailsFoodInProgress /> : <DetailsDrinkInProgress /> }
     </div>
   );
