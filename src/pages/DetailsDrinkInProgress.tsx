@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_DRINKS_LINK } from '../helpers/links';
-import { DrinkType } from '../types';
+import { DoneRecipesLocal, DrinkType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
+import DrinkRecipe from './DrinkRecipe';
 
 function DetailsDrinkInProgress() {
   const { id } = useParams<{ id: string }>();
@@ -14,16 +15,29 @@ function DetailsDrinkInProgress() {
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 
+  // salva a receita pronta no local storage, chave doneRecié
+  const handleSaveInLocalStorage = async () => {
+    const doneRecipe: DoneRecipesLocal = {
+      id: drinkRecipe.idDrink,
+      type: 'drink',
+      // nationality:
+      category: drinkRecipe.strCategory,
+      alcoholicOrNot: drinkRecipe?.strAlcoholic,
+      // name: drinkRecipe.
+      image: drinkRecipe.strDrinkThumb,
+      // doneDate:
+      tags: drinkRecipe.strTag,
+    };
+    const prevLocalStorage = JSON
+      .parse(localStorage.getItem('doneRecipes') ?? '[]');
+    localStorage.setItem('doneRecipes', JSON
+      .stringify([...prevLocalStorage, doneRecipe]));
+  };
+
   const fetchRecipe = async () => {
     const response = await fetchApi(`${ID_DRINKS_LINK}${id}`);
     setDrinkRecipe(response.drinks[0]);
   };
-
-  // salva a receita no local storage, descomentar após o fim da implementação da página
-  /* const handleSaveInLocalStorage = () => {
-    const storage = JSON.stringify(drinkRecipe);
-    localStorage.setItem('doneRecipes', storage);
-  }; */
 
   useEffect(() => {
     fetchRecipe();
@@ -109,7 +123,7 @@ function DetailsDrinkInProgress() {
       </div>
       <Link to="/done-recipes">
         <button
-          /* onClick={ handleSaveInLocalStorage } */
+          onClick={ handleSaveInLocalStorage }
           data-testid="finish-recipe-btn"
         >
           Finish Recipe

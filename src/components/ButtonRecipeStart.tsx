@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { DoneRecipesLocal, InProgressRecipes } from '../types';
 
 type PropType = {
@@ -7,6 +7,7 @@ type PropType = {
 };
 
 function ButtonRecipeStart({ page }: PropType) {
+  const { id } = useParams<{ id: string }>();
   const [recipesList, setRecipeList] = useState([] as DoneRecipesLocal[]);
   const [recipeInProgress, setRecipeInProgress] = useState<InProgressRecipes>(
     {
@@ -34,7 +35,7 @@ function ButtonRecipeStart({ page }: PropType) {
   if (page === 'Meal') {
     return (
       recipeInProgress.meals.idMeal.length !== 0 ? (
-        <Link to="/meals/:id/in-progress">
+        <Link to={ `/meals/:${id}/in-progress` }>
           <button
             style={ { position: 'fixed', bottom: '0px' } }
             data-testid="start-recipe-btn"
@@ -56,7 +57,7 @@ function ButtonRecipeStart({ page }: PropType) {
   if (page === 'Drink') {
     return (
       recipeInProgress.drinks.idDrink.length !== 0 ? (
-        <Link to="/drinks/:id/in-progress">
+        <Link to={ `/drinks/:${id}/in-progress` }>
           <button
             style={ { position: 'fixed', bottom: '0px' } }
             data-testid="start-recipe-btn"
