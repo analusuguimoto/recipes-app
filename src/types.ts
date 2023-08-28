@@ -98,5 +98,6 @@ export type MealType = {
 };
 
 export type IngredientsType = {
-  ingredient: string;
+  medida: string;
+  ingrediente: string;
 };

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_DRINKS_LINK } from '../helpers/links';
-import { DrinkType } from '../types';
+import { DrinkType, IngredientsType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 
@@ -10,7 +10,8 @@ function DetailsDrink() {
   const { id } = useParams<{ id: string }>();
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
   const [linkCopied, setLinkCopied] = useState(false);
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientsType[]>([]);
+  const [ischecked, setIschecked] = useState(false);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 
@@ -24,7 +25,7 @@ function DetailsDrink() {
   }, []);
 
   useEffect(() => {
-    const ingredientsArray = [] as string[];
+    const ingredientsArray = [];
     if (drinkRecipe) {
       const maxIngredientes = Object.keys(drinkRecipe)
         .filter((chave) => chave.startsWith('strIngredient')).length;
@@ -35,7 +36,11 @@ function DetailsDrink() {
         const medida = drinkRecipe[medidaChave];
 
         if (medida && ingrediente) {
-          ingredientsArray.push(`${medida} of ${ingrediente}`);
+          const obj = {
+            medida,
+            ingrediente,
+          };
+          ingredientsArray.push(obj);
         }
       }
     }
@@ -89,8 +94,9 @@ function DetailsDrink() {
                 <input
                   type="checkbox"
                   id="ingredient"
+                  checked={ ischecked }
                 />
-                {ingredient}
+                {`${ingredient.medida} of ${ingredient.ingrediente}`}
               </label>
             </li>
           ))}
