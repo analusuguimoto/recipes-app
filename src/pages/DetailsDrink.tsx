@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_DRINKS_LINK } from '../helpers/links';
-import { DrinkType, IngredientsType } from '../types';
+import { DrinkType, IngredientsType, CheckedIngredient } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 
@@ -11,7 +11,7 @@ function DetailsDrink() {
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
   const [linkCopied, setLinkCopied] = useState(false);
   const [ingredients, setIngredients] = useState<IngredientsType[]>([]);
-  const [ischecked, setIschecked] = useState<boolean[]>([]);
+  const [ischecked, setIschecked] = useState<CheckedIngredient[]>([]);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 
@@ -22,7 +22,15 @@ function DetailsDrink() {
 
   useEffect(() => {
     fetchRecipe();
+    const localStorageIngredients = localStorage.getItem('inProgressRecipes');
+    if (localStorageIngredients) {
+      setIschecked(JSON.parse(localStorageIngredients));
+    }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(ischecked));
+  }, [ischecked]);
 
   useEffect(() => {
     const ingredientsArray = [];
@@ -56,9 +64,33 @@ function DetailsDrink() {
   };
 
   const handleCheck = (i: any) => {
-    const newCheckedIngredient = [...ischecked];
-    newCheckedIngredient[i] = !newCheckedIngredient[i];
-    setIschecked(newCheckedIngredient);
+    const newCheckedIngredientsMap = [...ischecked];
+    if (drinkRecipe) {
+      const recipeId = drinkRecipe?.idMeal;
+      const existingRecipeIndex = newCheckedIngredientsMap
+        .findIndex((item) => item.recipeId === recipeId);
+
+      if (existingRecipeIndex === -1) {
+        newCheckedIngredientsMap.push({ recipeId, ingredientsChecked: { [i]: true } });
+      } else {
+        const existingChecked = newCheckedIngredientsMap[existingRecipeIndex]
+          .ingredientsChecked || {};
+        newCheckedIngredientsMap[existingRecipeIndex].ingredientsChecked = {
+          ...existingChecked,
+          [i]: !existingChecked[i],
+        };
+      }
+
+      setIschecked(newCheckedIngredientsMap);
+    }
+  };
+
+  const getCheckedStatus = (index: number) => {
+    const recipeId = drinkRecipe?.idMeal;
+    const existingRecipe = ischecked.find((item) => item.recipeId === recipeId);
+
+    return existingRecipe
+      && existingRecipe.ingredientsChecked && existingRecipe.ingredientsChecked[index];
   };
 
   return (
@@ -97,7 +129,7 @@ function DetailsDrink() {
                 data-testid={ `${i}-ingredient-step` }
                 key={ i }
                 style={
-                  ischecked[i]
+                  getCheckedStatus(i)
                     ? { textDecoration: 'line-through solid rgb(0,0,0)' }
                     : undefined
                 }
@@ -106,7 +138,7 @@ function DetailsDrink() {
                   type="checkbox"
                   id="ingredient"
                   onChange={ () => handleCheck(i) }
-                  checked={ ischecked[i] }
+                  checked={ getCheckedStatus(i) }
                 />
                 {`${ingredient.medida} of ${ingredient.ingrediente}`}
               </label>

@@ -5,7 +5,7 @@ import { fetchApi } from '../helpers/fetchApi';
 import MealRecommendationCard from '../components/MealRecommendationCard';
 import { Meal } from '../context/search-results-context';
 import '../App.css';
-import { DrinkType, IngredientsType } from '../types';
+import { DrinkType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 

@@ -101,3 +101,8 @@ export type IngredientsType = {
   medida: string;
   ingrediente: string;
 };
+
+export interface CheckedIngredient {
+  recipeId: string;
+  ingredientsChecked: { [index: number]: boolean };
+}
