@@ -10,8 +10,8 @@ function DetailsFood() {
   const { id } = useParams<{ id: string }>();
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [linkCopied, setLinkCopied] = useState(false);
-  const [ingredients, setIngredients] = useState<IngredientsType[]>([]);
   const [ischecked, setIschecked] = useState<CheckedIngredient[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientsType[]>([]);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 
