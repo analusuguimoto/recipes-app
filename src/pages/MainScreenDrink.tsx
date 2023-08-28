@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ButtonRecipeStart from '../components/ButtonRecipeStart';
 import { ID_DRINKS_LINK, MEALS_LINK } from '../helpers/links';
 import { fetchApi } from '../helpers/fetchApi';
 import MealRecommendationCard from '../components/MealRecommendationCard';
@@ -9,6 +8,7 @@ import '../App.css';
 import { DrinkType, IngredientsType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
+import ButtonRecipeStart from '../components/ButtonRecipeStart';
 
 function MainScreenDrink() {
   const { id } = useParams<{ id: string }>();
@@ -117,7 +117,7 @@ function MainScreenDrink() {
           ))}
         </div>
       </div>
-      <ButtonRecipeStart page="Drink" />
+      { /* <ButtonRecipeStart page="Drink" recipeId={ id } /> */ }
     </>
   );
 }

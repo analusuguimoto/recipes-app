@@ -4,9 +4,10 @@ import { DoneRecipesLocal, InProgressRecipes } from '../types';
 
 type PropType = {
   page: string;
+  recipeId: string;
 };
 
-function ButtonRecipeStart({ page }: PropType) {
+function ButtonRecipeStart({ page, recipeId }: PropType) {
   const [recipesList, setRecipeList] = useState([] as DoneRecipesLocal[]);
   const [recipeInProgress, setRecipeInProgress] = useState<InProgressRecipes>(
     {
@@ -23,7 +24,7 @@ function ButtonRecipeStart({ page }: PropType) {
   }, [setRecipeList]);
 
   useEffect(() => {
-    // Pegando o storage para verificar se existe algum item e se tiver, coloco ele no estado, se não tiver, coloco um array vazio lá
+    // Pecgando o storage para verificar se existe algum item e se tiver, coloco ele no estado, se não tiver, coloco um array vazio lá
     const storageRecipesInProgress = JSON
       .parse(localStorage.getItem('inProgressRecipes') || 'null') ?? '[]';
     setRecipeInProgress(storageRecipesInProgress);
@@ -34,7 +35,7 @@ function ButtonRecipeStart({ page }: PropType) {
   if (page === 'Meal') {
     return (
       recipeInProgress.meals.idMeal.length !== 0 ? (
-        <Link to="/meals/:id-da-receita/in-progress">
+        <Link to={ `/meals/:${recipeId}/in-progress` }>
           <button
             style={ { position: 'fixed', bottom: '0px' } }
             data-testid="start-recipe-btn"
@@ -56,7 +57,7 @@ function ButtonRecipeStart({ page }: PropType) {
   if (page === 'Drink') {
     return (
       recipeInProgress.drinks.idDrink.length !== 0 ? (
-        <Link to="/drinks/:id-da-receita/in-progress">
+        <Link to={ `/drinks/:${recipeId}/in-progress` }>
           <button
             style={ { position: 'fixed', bottom: '0px' } }
             data-testid="start-recipe-btn"
