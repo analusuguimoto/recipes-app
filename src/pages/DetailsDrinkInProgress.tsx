@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_DRINKS_LINK } from '../helpers/links';
-import { DoneRecipesLocal, DrinkType } from '../types';
+import { DrinkType,
+  IngredientsType, CheckedIngredient, DoneRecipesLocal } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 import DrinkRecipe from './DrinkRecipe';
@@ -11,7 +12,8 @@ function DetailsDrinkInProgress() {
   const { id } = useParams<{ id: string }>();
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
   const [linkCopied, setLinkCopied] = useState(false);
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientsType[]>([]);
+  const [ischecked, setIschecked] = useState<CheckedIngredient[]>([]);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 
@@ -41,10 +43,18 @@ function DetailsDrinkInProgress() {
 
   useEffect(() => {
     fetchRecipe();
+    const localStorageIngredients = localStorage.getItem('inProgressRecipes');
+    if (localStorageIngredients) {
+      setIschecked(JSON.parse(localStorageIngredients));
+    }
   }, []);
 
   useEffect(() => {
-    const ingredientsArray = [] as string[];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(ischecked));
+  }, [ischecked]);
+
+  useEffect(() => {
+    const ingredientsArray = [];
     if (drinkRecipe) {
       const maxIngredientes = Object.keys(drinkRecipe)
         .filter((chave) => chave.startsWith('strIngredient')).length;
@@ -55,7 +65,11 @@ function DetailsDrinkInProgress() {
         const medida = drinkRecipe[medidaChave];
 
         if (medida && ingrediente) {
-          ingredientsArray.push(`${medida} of ${ingrediente}`);
+          const obj = {
+            medida,
+            ingrediente,
+          };
+          ingredientsArray.push(obj);
         }
       }
     }
@@ -69,6 +83,36 @@ function DetailsDrinkInProgress() {
         setLinkCopied(true);
       })
       .catch((err) => console.error('Erro ao copiar: ', err));
+  };
+
+  const handleCheck = (i: any) => {
+    const newCheckedIngredientsMap = [...ischecked];
+    if (drinkRecipe) {
+      const recipeId = drinkRecipe?.idMeal;
+      const existingRecipeIndex = newCheckedIngredientsMap
+        .findIndex((item) => item.recipeId === recipeId);
+
+      if (existingRecipeIndex === -1) {
+        newCheckedIngredientsMap.push({ recipeId, ingredientsChecked: { [i]: true } });
+      } else {
+        const existingChecked = newCheckedIngredientsMap[existingRecipeIndex]
+          .ingredientsChecked || {};
+        newCheckedIngredientsMap[existingRecipeIndex].ingredientsChecked = {
+          ...existingChecked,
+          [i]: !existingChecked[i],
+        };
+      }
+
+      setIschecked(newCheckedIngredientsMap);
+    }
+  };
+
+  const getCheckedStatus = (index: number) => {
+    const recipeId = drinkRecipe?.idMeal;
+    const existingRecipe = ischecked.find((item) => item.recipeId === recipeId);
+
+    return existingRecipe
+      && existingRecipe.ingredientsChecked && existingRecipe.ingredientsChecked[index];
   };
 
   return (
@@ -107,12 +151,19 @@ function DetailsDrinkInProgress() {
                 htmlFor="ingredient"
                 data-testid={ `${i}-ingredient-step` }
                 key={ i }
+                style={
+                  getCheckedStatus(i)
+                    ? { textDecoration: 'line-through solid rgb(0,0,0)' }
+                    : undefined
+                }
               >
                 <input
                   type="checkbox"
                   id="ingredient"
+                  onChange={ () => handleCheck(i) }
+                  checked={ getCheckedStatus(i) }
                 />
-                {ingredient}
+                {`${ingredient.medida} of ${ingredient.ingrediente}`}
               </label>
             </li>
           ))}

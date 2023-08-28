@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_MEALS_LINK } from '../helpers/links';
-import { MealType, DoneRecipesLocal } from '../types';
+import { IngredientsType, MealType, CheckedIngredient, DoneRecipesLocal } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 
@@ -10,7 +10,8 @@ function DetailsFoodInProgress() {
   const { id } = useParams<{ id: string }>();
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [linkCopied, setLinkCopied] = useState(false);
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [ischecked, setIschecked] = useState<CheckedIngredient[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientsType[]>([]);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 
@@ -40,10 +41,18 @@ function DetailsFoodInProgress() {
 
   useEffect(() => {
     fetchRecipe();
+    const localStorageIngredients = localStorage.getItem('inProgressRecipes');
+    if (localStorageIngredients) {
+      setIschecked(JSON.parse(localStorageIngredients));
+    }
   }, []);
 
   useEffect(() => {
-    const ingredientsArray = [] as string[];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(ischecked));
+  }, [ischecked]);
+
+  useEffect(() => {
+    const ingredientsArray = [];
     if (mealRecipe) {
       const maxIngredientes = Object.keys(mealRecipe)
         .filter((chave) => chave.startsWith('strIngredient')).length;
@@ -54,7 +63,11 @@ function DetailsFoodInProgress() {
         const medida = mealRecipe[medidaChave];
 
         if (medida && ingrediente) {
-          ingredientsArray.push(`${medida} of ${ingrediente}`);
+          const obj = {
+            medida,
+            ingrediente,
+          };
+          ingredientsArray.push(obj);
         }
       }
     }
@@ -67,6 +80,36 @@ function DetailsFoodInProgress() {
         setLinkCopied(true);
       })
       .catch((err) => console.error('Erro ao copiar: ', err));
+  };
+
+  const handleCheck = (i: any) => {
+    const newCheckedIngredientsMap = [...ischecked];
+    if (mealRecipe) {
+      const recipeId = mealRecipe?.idMeal;
+      const existingRecipeIndex = newCheckedIngredientsMap
+        .findIndex((item) => item.recipeId === recipeId);
+
+      if (existingRecipeIndex === -1) {
+        newCheckedIngredientsMap.push({ recipeId, ingredientsChecked: { [i]: true } });
+      } else {
+        const existingChecked = newCheckedIngredientsMap[existingRecipeIndex]
+          .ingredientsChecked || {};
+        newCheckedIngredientsMap[existingRecipeIndex].ingredientsChecked = {
+          ...existingChecked,
+          [i]: !existingChecked[i],
+        };
+      }
+
+      setIschecked(newCheckedIngredientsMap);
+    }
+  };
+
+  const getCheckedStatus = (index: number) => {
+    const recipeId = mealRecipe?.idMeal;
+    const existingRecipe = ischecked.find((item) => item.recipeId === recipeId);
+
+    return existingRecipe
+      && existingRecipe.ingredientsChecked && existingRecipe.ingredientsChecked[index];
   };
 
   return (
@@ -99,18 +142,22 @@ function DetailsFoodInProgress() {
         <h3>Ingredients</h3>
         <ul>
           {ingredients.map((ingredient, i) => (
-            <li key={ i }>
-              <label
-                htmlFor="ingredient"
-                data-testid={ `${i}-ingredient-step` }
-                key={ i }
-              >
-                <input
-                  type="checkbox"
-                  id="ingredient"
-                />
-                {ingredient}
-              </label>
+            <li
+              key={ i }
+              data-testid={ `${i}-ingredient-step` }
+              style={
+                getCheckedStatus(i)
+                  ? { textDecoration: 'line-through solid rgb(0,0,0)' }
+                  : undefined
+              }
+            >
+              <input
+                type="checkbox"
+                id="ingredient"
+                onChange={ () => handleCheck(i) }
+                checked={ getCheckedStatus(i) }
+              />
+              {`${ingredient.medida} of ${ingredient.ingrediente}`}
             </li>
           ))}
         </ul>
