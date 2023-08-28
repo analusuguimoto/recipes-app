@@ -2,7 +2,31 @@ export type CategoryType = {
   strCategory: string;
 };
 
+export type DoneRecipesLocal = {
+
+  id?: string,
+  type?: string,
+  nationality?: string,
+  category?: string,
+  alcoholicOrNot?: string,
+  name?: string,
+  image?: string,
+  doneDate?: string,
+  tags?: string,
+
+};
+
+export type InProgressRecipes = {
+  drinks: {
+    idDrink: string[],
+  },
+  meals: {
+    idMeal: string[],
+  }
+};
+
 export type DrinkType = {
+  dateModified: string;
   idDrink: string;
   strAlcoholic: string;
   strCategory: string;
@@ -46,6 +70,7 @@ export type DrinkType = {
 };
 
 export type MealType = {
+  dateModified: string;
   idMeal: string;
   strArea: string;
   strCategory: string;
@@ -94,6 +119,7 @@ export type MealType = {
   strMeasure20: string;
   strSource: string;
   strYoutube: string;
+  strTags: string;
   [key: string]: string;
 };
 

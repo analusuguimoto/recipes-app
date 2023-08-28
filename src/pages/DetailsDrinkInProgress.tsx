@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_DRINKS_LINK } from '../helpers/links';
-import { DrinkType, IngredientsType, CheckedIngredient } from '../types';
+import { DrinkType,
+  IngredientsType, CheckedIngredient, DoneRecipesLocal } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
+import DrinkRecipe from './DrinkRecipe';
 
-function DetailsDrink() {
+function DetailsDrinkInProgress() {
   const { id } = useParams<{ id: string }>();
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
   const [linkCopied, setLinkCopied] = useState(false);
@@ -14,6 +16,25 @@ function DetailsDrink() {
   const [ischecked, setIschecked] = useState<CheckedIngredient[]>([]);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+
+  // salva a receita pronta no local storage, chave doneRecié
+  const handleSaveInLocalStorage = async () => {
+    const doneRecipe: DoneRecipesLocal = {
+      id: drinkRecipe?.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: drinkRecipe?.strCategory,
+      alcoholicOrNot: drinkRecipe?.strAlcoholic,
+      name: drinkRecipe?.strDrink,
+      image: drinkRecipe?.strDrinkThumb,
+      doneDate: drinkRecipe?.dateModified,
+      tags: drinkRecipe?.strTag,
+    };
+    const prevLocalStorage = JSON
+      .parse(localStorage.getItem('doneRecipes') ?? '[]');
+    localStorage.setItem('doneRecipes', JSON
+      .stringify([...prevLocalStorage, doneRecipe]));
+  };
 
   const fetchRecipe = async () => {
     const response = await fetchApi(`${ID_DRINKS_LINK}${id}`);
@@ -53,6 +74,7 @@ function DetailsDrink() {
       }
     }
     setIngredients(ingredientsArray);
+    console.log(drinkRecipe);
   }, [drinkRecipe]);
 
   const handleShareBtn = () => {
@@ -95,6 +117,7 @@ function DetailsDrink() {
 
   return (
     <>
+      =======
       <nav>
         <h1 data-testid="recipe-category">{ drinkRecipe?.strCategory }</h1>
         <div>
@@ -150,13 +173,16 @@ function DetailsDrink() {
         <h3>Instructions</h3>
         <p data-testid="instructions">{drinkRecipe?.strInstructions}</p>
       </div>
-      <button
-        data-testid="finish-recipe-btn"
-      >
-        Finish Recipe
-      </button>
+      <Link to="/done-recipes">
+        <button
+          onClick={ handleSaveInLocalStorage }
+          data-testid="finish-recipe-btn"
+        >
+          Finish Recipe
+        </button>
+      </Link>
     </>
   );
 }
 
-export default DetailsDrink;
+export default DetailsDrinkInProgress;

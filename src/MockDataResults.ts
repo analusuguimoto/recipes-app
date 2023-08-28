@@ -1,4 +1,13 @@
-export const mealsData = {
+export const meals = {
+  meals: [
+    {
+      idMeal: '52977',
+      strMeal: 'Corba',
+      strMealThumb: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+    },
+  ],
+};
+export const mealsChickenIngredient = {
   meals: [
     {
       strMeal: 'Brown Stew Chicken',
@@ -56,4 +65,41 @@ export const mealsData = {
       idMeal: '52814',
     },
   ],
+};
+export const oneMeal = {
+  meals: [
+    {
+      idMeal: '52977',
+      strMeal: 'Corba',
+      strDrinkAlternate: null,
+    },
+  ],
+};
+
+export const emptyMeal = {
+  meals: null,
+};
+
+export const drinks = {
+  drinks: [
+    {
+      idDrink: '11007',
+      strDrink: 'Margarita',
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg',
+    },
+  ],
+};
+
+export const oneDrink = {
+  drinks: [
+    {
+      idDrink: '11007',
+      strDrink: 'Margarita',
+      strDrinkAlternate: null,
+    },
+  ],
+};
+
+export const emptyDrink = {
+  drinks: null,
 };
