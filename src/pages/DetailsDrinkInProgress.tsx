@@ -18,15 +18,15 @@ function DetailsDrinkInProgress() {
   // salva a receita pronta no local storage, chave doneRecié
   const handleSaveInLocalStorage = async () => {
     const doneRecipe: DoneRecipesLocal = {
-      id: drinkRecipe.idDrink,
+      id: drinkRecipe?.idDrink,
       type: 'drink',
-      // nationality:
-      category: drinkRecipe.strCategory,
+      nationality: '',
+      category: drinkRecipe?.strCategory,
       alcoholicOrNot: drinkRecipe?.strAlcoholic,
-      // name: drinkRecipe.
-      image: drinkRecipe.strDrinkThumb,
-      // doneDate:
-      tags: drinkRecipe.strTag,
+      name: drinkRecipe?.strDrink,
+      image: drinkRecipe?.strDrinkThumb,
+      doneDate: drinkRecipe?.dateModified,
+      tags: drinkRecipe?.strTag,
     };
     const prevLocalStorage = JSON
       .parse(localStorage.getItem('doneRecipes') ?? '[]');
@@ -60,6 +60,7 @@ function DetailsDrinkInProgress() {
       }
     }
     setIngredients(ingredientsArray);
+    console.log(drinkRecipe);
   }, [drinkRecipe]);
 
   const handleShareBtn = () => {

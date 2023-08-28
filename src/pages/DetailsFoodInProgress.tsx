@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_MEALS_LINK } from '../helpers/links';
-import { MealType } from '../types';
+import { MealType, DoneRecipesLocal } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 
@@ -19,11 +19,24 @@ function DetailsFoodInProgress() {
     setMealRecipe(response.meals[0]);
   };
 
-  // salva a receita no local storage, descomentar após a implementação da página
-  /* const handleSaveInLocalStorage = () => {
-    const storage = JSON.stringify(mealRecipe);
-    localStorage.setItem('doneRecipes', storage);
-  }; */
+  // salva a receita pronta no local storage, chave doneRecié
+  const handleSaveInLocalStorage = async () => {
+    const doneRecipe: DoneRecipesLocal = {
+      id: mealRecipe?.idMeal,
+      type: 'meal',
+      nationality: mealRecipe?.strArea,
+      category: mealRecipe?.strCategory,
+      alcoholicOrNot: mealRecipe?.strAlcoholic,
+      name: mealRecipe?.strMeal,
+      image: mealRecipe?.strMealThumb,
+      doneDate: mealRecipe?.dateModified,
+      tags: mealRecipe?.strTags,
+    };
+    const prevLocalStorage = JSON
+      .parse(localStorage.getItem('doneRecipes') ?? '[]');
+    localStorage.setItem('doneRecipes', JSON
+      .stringify([...prevLocalStorage, doneRecipe]));
+  };
 
   useEffect(() => {
     fetchRecipe();
@@ -112,7 +125,7 @@ function DetailsFoodInProgress() {
       <Link to="/done-recipes">
         <button
           data-testid="finish-recipe-btn"
-          /* onClick={ handleSaveInLocalStorage } */
+          onClick={ handleSaveInLocalStorage }
         >
           Finish Recipe
         </button>

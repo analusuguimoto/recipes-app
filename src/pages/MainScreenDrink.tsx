@@ -117,7 +117,7 @@ function MainScreenDrink() {
           ))}
         </div>
       </div>
-      <ButtonRecipeStart page="Drink" />
+      { /* <ButtonRecipeStart page="Drink" recipeId={ id } /> */ }
     </>
   );
 }
