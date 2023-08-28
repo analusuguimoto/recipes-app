@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_MEALS_LINK } from '../helpers/links';
-import { MealType } from '../types';
+import { IngredientsType, MealType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 
@@ -10,7 +10,8 @@ function DetailsFood() {
   const { id } = useParams<{ id: string }>();
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [linkCopied, setLinkCopied] = useState(false);
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientsType[]>([]);
+  const [ischecked, setIschecked] = useState<boolean[]>([]);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 
@@ -24,7 +25,7 @@ function DetailsFood() {
   }, []);
 
   useEffect(() => {
-    const ingredientsArray = [] as string[];
+    const ingredientsArray = [];
     if (mealRecipe) {
       const maxIngredientes = Object.keys(mealRecipe)
         .filter((chave) => chave.startsWith('strIngredient')).length;
@@ -35,7 +36,11 @@ function DetailsFood() {
         const medida = mealRecipe[medidaChave];
 
         if (medida && ingrediente) {
-          ingredientsArray.push(`${medida} of ${ingrediente}`);
+          const obj = {
+            medida,
+            ingrediente,
+          };
+          ingredientsArray.push(obj);
         }
       }
     }
@@ -48,6 +53,12 @@ function DetailsFood() {
         setLinkCopied(true);
       })
       .catch((err) => console.error('Erro ao copiar: ', err));
+  };
+
+  const handleCheck = (i: any) => {
+    const newCheckedIngredient = [...ischecked];
+    newCheckedIngredient[i] = !newCheckedIngredient[i];
+    setIschecked(newCheckedIngredient);
   };
 
   return (
@@ -85,12 +96,19 @@ function DetailsFood() {
                 htmlFor="ingredient"
                 data-testid={ `${i}-ingredient-step` }
                 key={ i }
+                style={
+                  ischecked[i]
+                    ? { textDecoration: 'line-through solid rgb(0,0,0)' }
+                    : undefined
+                }
               >
                 <input
                   type="checkbox"
                   id="ingredient"
+                  onChange={ () => handleCheck(i) }
+                  checked={ ischecked[i] }
                 />
-                {ingredient}
+                {`${ingredient.medida} of ${ingredient.ingrediente}`}
               </label>
             </li>
           ))}

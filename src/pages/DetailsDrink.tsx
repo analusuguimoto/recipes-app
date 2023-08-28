@@ -11,7 +11,7 @@ function DetailsDrink() {
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
   const [linkCopied, setLinkCopied] = useState(false);
   const [ingredients, setIngredients] = useState<IngredientsType[]>([]);
-  const [ischecked, setIschecked] = useState(false);
+  const [ischecked, setIschecked] = useState<boolean[]>([]);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 
@@ -55,6 +55,12 @@ function DetailsDrink() {
       .catch((err) => console.error('Erro ao copiar: ', err));
   };
 
+  const handleCheck = (i: any) => {
+    const newCheckedIngredient = [...ischecked];
+    newCheckedIngredient[i] = !newCheckedIngredient[i];
+    setIschecked(newCheckedIngredient);
+  };
+
   return (
     <>
       <nav>
@@ -90,11 +96,17 @@ function DetailsDrink() {
                 htmlFor="ingredient"
                 data-testid={ `${i}-ingredient-step` }
                 key={ i }
+                style={
+                  ischecked[i]
+                    ? { textDecoration: 'line-through solid rgb(0,0,0)' }
+                    : undefined
+                }
               >
                 <input
                   type="checkbox"
                   id="ingredient"
-                  checked={ ischecked }
+                  onChange={ () => handleCheck(i) }
+                  checked={ ischecked[i] }
                 />
                 {`${ingredient.medida} of ${ingredient.ingrediente}`}
               </label>
