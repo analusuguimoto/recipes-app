@@ -104,7 +104,6 @@ function MainScreenFood() {
   };
 
   const existingRecipe = favoriteRecipes.find((item) => item.id === mealRecipe?.idMeal);
-
   return (
     <>
       <nav>

@@ -17,9 +17,19 @@ function DetailsDrinkInProgress() {
     setIschecked] = useState<InProgressRecipes>({ meals: {}, drinks: {} });
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+  const [arrayTag, setArrayTag] = useState<string[]>([]);
 
   // salva a receita pronta no local storage, chave doneRecié
   const handleSaveInLocalStorage = async () => {
+    const realDate = new Date().toISOString();
+    const tagString = drinkRecipe?.strTags;
+    let tagArray;
+    if (tagString) {
+      tagArray = tagString.split(',').map((tag) => tag.trim());
+    }
+    if (tagArray) {
+      setArrayTag(tagArray);
+    }
     const doneRecipe: DoneRecipesLocal = {
       id: drinkRecipe?.idDrink,
       type: 'drink',
@@ -28,8 +38,8 @@ function DetailsDrinkInProgress() {
       alcoholicOrNot: drinkRecipe?.strAlcoholic,
       name: drinkRecipe?.strDrink,
       image: drinkRecipe?.strDrinkThumb,
-      doneDate: drinkRecipe?.dateModified,
-      tags: drinkRecipe?.strTag,
+      doneDate: realDate,
+      tags: arrayTag,
     };
     const prevLocalStorage = JSON
       .parse(localStorage.getItem('doneRecipes') ?? '[]');
