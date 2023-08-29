@@ -6,7 +6,6 @@ import { useRecipeContext, Drink } from '../context/search-results-context';
 import DrinkRecommendationCard from '../components/DrinkRecommendationCard';
 import '../App.css';
 import shareBtn from '../images/shareBtn.svg';
-import likeBtn from '../images/likeBtn.svg';
 import { MealType } from '../types';
 import ButtonRecipeStart from '../components/ButtonRecipeStart';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -104,6 +103,7 @@ function MainScreenFood() {
   };
 
   const existingRecipe = favoriteRecipes.find((item) => item.id === mealRecipe?.idMeal);
+
   return (
     <>
       <nav>
