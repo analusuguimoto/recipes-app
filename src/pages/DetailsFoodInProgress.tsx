@@ -170,6 +170,7 @@ function DetailsFoodInProgress() {
         <button
           data-testid="finish-recipe-btn"
           onClick={ handleSaveInLocalStorage }
+          disabled={ !ingredients.every((ingredient, index) => getCheckedStatus(index)) }
         >
           Finish Recipe
         </button>

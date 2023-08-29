@@ -173,8 +173,9 @@ function DetailsDrinkInProgress() {
       </div>
       <Link to="/done-recipes">
         <button
-          onClick={ handleSaveInLocalStorage }
           data-testid="finish-recipe-btn"
+          onClick={ handleSaveInLocalStorage }
+          disabled={ !ingredients.every((ingredient, index) => getCheckedStatus(index)) }
         >
           Finish Recipe
         </button>
