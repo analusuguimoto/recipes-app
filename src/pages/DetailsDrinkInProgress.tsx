@@ -115,7 +115,6 @@ function DetailsDrinkInProgress() {
 
   return (
     <>
-      =======
       <nav>
         <h1 data-testid="recipe-category">{ drinkRecipe?.strCategory }</h1>
         <div>
