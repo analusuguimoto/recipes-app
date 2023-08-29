@@ -22,16 +22,23 @@ function DetailsFoodInProgress() {
   };
 
   const handleSaveInLocalStorage = async () => {
+    const realDate = new Date().toISOString();
+    const tagString = mealRecipe?.strTags;
+    let tagArray;
+    if (tagString) {
+      tagArray = tagString.split(',');
+    }
+
     const doneRecipe: DoneRecipesLocal = {
       id: mealRecipe?.idMeal,
       type: 'meal',
       nationality: mealRecipe?.strArea,
       category: mealRecipe?.strCategory,
-      alcoholicOrNot: mealRecipe?.strAlcoholic,
+      alcoholicOrNot: '',
       name: mealRecipe?.strMeal,
       image: mealRecipe?.strMealThumb,
-      doneDate: mealRecipe?.dateModified,
-      tags: mealRecipe?.strTags,
+      doneDate: realDate,
+      tags: tagArray,
     };
     const prevLocalStorage = JSON
       .parse(localStorage.getItem('doneRecipes') ?? '[]');

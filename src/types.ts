@@ -12,7 +12,7 @@ export type DoneRecipesLocal = {
   name?: string,
   image?: string,
   doneDate?: string,
-  tags?: string,
+  tags?: string[],
 
 };
 
