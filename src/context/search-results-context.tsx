@@ -15,6 +15,16 @@ export interface Drink {
   strDrinkThumb: string;
 }
 
+export interface Favorites {
+  id: string | undefined;
+  type: string;
+  nationality: string | undefined;
+  category: string | undefined;
+  alcoholicOrNot: string | undefined;
+  name:string | undefined;
+  image: string | undefined;
+}
+
 type RecipeContextType = {
   mealResults: Meal[];
   drinkResults: Drink[];
@@ -24,6 +34,8 @@ type RecipeContextType = {
   updateDrinkState: (newState: Drink[]) => void;
   fetchMeals: () => void;
   fetchDrinks: () => void;
+  favoriteRecipes: Favorites[];
+  setFavoriteRecipes: React.Dispatch<React.SetStateAction<Favorites[]>>;
 };
 
 const RecipeContext = createContext<RecipeContextType>({
@@ -35,6 +47,8 @@ const RecipeContext = createContext<RecipeContextType>({
   updateDrinkState: () => {},
   fetchMeals: () => {},
   fetchDrinks: () => {},
+  favoriteRecipes: [],
+  setFavoriteRecipes: () => {},
 });
 
 export function useRecipeContext() {
@@ -50,6 +64,7 @@ export function RecipeProvider({ children }: RecipeProviderProps) {
   const [drinkResults, setDrinkResults] = useState<Drink[]>([]);
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
+  const [favoriteRecipes, setFavoriteRecipes] = useState<Favorites[]>([]);
 
   const fetchMeals = async () => {
     const response = await fetchApi(MEALS_LINK);
@@ -87,6 +102,8 @@ export function RecipeProvider({ children }: RecipeProviderProps) {
         updateDrinkState,
         fetchMeals,
         fetchDrinks,
+        favoriteRecipes,
+        setFavoriteRecipes,
       } }
     >
       {children}
