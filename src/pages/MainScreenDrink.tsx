@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import { ID_DRINKS_LINK, MEALS_LINK } from '../helpers/links';
 import { fetchApi } from '../helpers/fetchApi';
 import MealRecommendationCard from '../components/MealRecommendationCard';
-import { Meal } from '../context/search-results-context';
+import { useRecipeContext, Meal } from '../context/search-results-context';
 import '../App.css';
 import { DrinkType } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 import ButtonRecipeStart from '../components/ButtonRecipeStart';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function MainScreenDrink() {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +19,8 @@ function MainScreenDrink() {
   const currentUrl = window.location.href;
   const [mealRecommendations, setMealRecommendations] = useState<Meal[]>([]);
   const [ingredients, setIngredients] = useState<string[]>([]);
+  const { favoriteRecipes, setFavoriteRecipes } = useRecipeContext();
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const fetchRecommendations = async () => {
     const response = await fetchApi(MEALS_LINK);
@@ -52,6 +56,15 @@ function MainScreenDrink() {
     setIngredients(ingredientsArray);
   }, [drinkRecipe]);
 
+  useEffect(() => {
+    const getFromLS = JSON.parse(localStorage.getItem('favoriteRecipes') as string);
+
+    if (getFromLS) {
+      setFavoriteRecipes(getFromLS);
+      console.log(favoriteRecipes);
+    }
+  }, []);
+
   const handleShareBtn = () => {
     navigator.clipboard.writeText(currentUrl)
       .then(() => {
@@ -59,6 +72,39 @@ function MainScreenDrink() {
       })
       .catch((err) => console.error('Erro ao copiar: ', err));
   };
+
+  const handleFavoriteDrink = () => {
+    const checkFav = favoriteRecipes?.some((item) => item.id === drinkRecipe?.idDrink);
+
+    if (checkFav) {
+      setIsFavorite(false);
+      const copyOfFavorites = favoriteRecipes
+        .filter((favItem) => favItem.id !== drinkRecipe?.idDrink);
+      setFavoriteRecipes(copyOfFavorites);
+      const favoriteStringfy = JSON.stringify(copyOfFavorites);
+      localStorage.setItem('favoriteRecipes', favoriteStringfy);
+      return true;
+    }
+
+    const updatedFavRecipes = [...favoriteRecipes, {
+      id: drinkRecipe?.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: drinkRecipe?.strCategory,
+      alcoholicOrNot: drinkRecipe?.strAlcoholic,
+      name: drinkRecipe?.strDrink,
+      image: drinkRecipe?.strDrinkThumb,
+    }];
+
+    setFavoriteRecipes(updatedFavRecipes);
+
+    setIsFavorite(true);
+
+    const favStringfy = JSON.stringify(updatedFavRecipes);
+    localStorage.setItem('favoriteRecipes', favStringfy);
+  };
+
+  const existingRecipe = favoriteRecipes.find((item) => item.id === drinkRecipe?.idDrink);
 
   return (
     <>
@@ -73,9 +119,13 @@ function MainScreenDrink() {
               : <span>Link copied!</span>}
           </button>
           <button
-            data-testid="favorite-btn"
+            onClick={ handleFavoriteDrink }
           >
-            <img src={ likeBtn } alt="Botão de dar Like em uma receita" />
+            <img
+              data-testid="favorite-btn"
+              src={ existingRecipe ? blackHeartIcon : whiteHeartIcon }
+              alt="Botão de dar Like em uma receita"
+            />
           </button>
         </div>
       </nav>
