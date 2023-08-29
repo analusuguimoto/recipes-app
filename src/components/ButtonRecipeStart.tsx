@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckedIngredient, DoneRecipesLocal } from '../types';
+import { DoneRecipesLocal } from '../types';
 
 type PropType = {
   page: string;
@@ -9,8 +9,6 @@ type PropType = {
 
 function ButtonRecipeStart({ page, recipeId }: PropType) {
   const [recipesList, setRecipeList] = useState([] as DoneRecipesLocal[]);
-  const [recipeInProgress, setRecipeInProgress] = useState<CheckedIngredient[]>([]);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,18 +17,19 @@ function ButtonRecipeStart({ page, recipeId }: PropType) {
     setRecipeList(storageDoneRecipes);
   }, []);
 
-  useEffect(() => {
+  const isRecipeInProgress = () => {
+    if (!recipeId) {
+      return false;
+    }
     const localStorageIngredients = localStorage.getItem('inProgressRecipes');
     if (localStorageIngredients) {
-      setRecipeInProgress(JSON.parse(localStorageIngredients));
+      const inProgressRecipes = JSON.parse(localStorageIngredients);
+      return (
+        (inProgressRecipes.meals && recipeId in inProgressRecipes.meals)
+        || (inProgressRecipes.drinks && recipeId in inProgressRecipes.drinks)
+      );
     }
-  }, []);
-
-  const isRecipeInProgress = () => {
-    return (
-      recipeInProgress.meals?.hasOwnProperty(recipeId)
-      || recipeInProgress.drinks?.hasOwnProperty(recipeId)
-    );
+    return false;
   };
 
   const handleStartRecipeClick = () => {
@@ -40,25 +39,10 @@ function ButtonRecipeStart({ page, recipeId }: PropType) {
       } else if (page === 'Drink') {
         navigate(`/drinks/${recipeId}/in-progress`);
       }
-    } else {
-      // Start a new recipe
-      if (page === 'Meal') {
-        setRecipeInProgress((prevState) => ({
-          ...prevState,
-          meals: {
-            ...prevState.meals,
-            [recipeId]: [],
-          },
-        }));
-      } else if (page === 'Drink') {
-        setRecipeInProgress((prevState) => ({
-          ...prevState,
-          drinks: {
-            ...prevState.drinks,
-            [recipeId]: [],
-          },
-        }));
-      }
+    } else if (page === 'Meal') {
+      navigate(`/meals/${recipeId}/in-progress`);
+    } else if (page === 'Drink') {
+      navigate(`/drinks/${recipeId}/in-progress`);
     }
   };
 
