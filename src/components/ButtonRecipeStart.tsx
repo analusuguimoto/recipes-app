@@ -1,80 +1,62 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { DoneRecipesLocal, InProgressRecipes } from '../types';
+import { useNavigate } from 'react-router-dom';
+import { DoneRecipesLocal } from '../types';
 
 type PropType = {
   page: string;
-  recipeId: string;
+  recipeId: string | undefined;
 };
 
 function ButtonRecipeStart({ page, recipeId }: PropType) {
   const [recipesList, setRecipeList] = useState([] as DoneRecipesLocal[]);
-  const [recipeInProgress, setRecipeInProgress] = useState<InProgressRecipes>(
-    {
-      drinks: { idDrink: [] },
-      meals: { idMeal: [] },
-    },
-  );
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Pegando o storage para verificar se existe algum item e se tiver, coloco ele no estado, se não tiver, coloco um array vazio lá
     const storageDoneRecipes: DoneRecipesLocal[] = JSON
       .parse(localStorage.getItem('doneRecipes') || 'null') ?? '[]';
     setRecipeList(storageDoneRecipes);
-  }, [setRecipeList]);
+  }, []);
 
-  useEffect(() => {
-    // Pecgando o storage para verificar se existe algum item e se tiver, coloco ele no estado, se não tiver, coloco um array vazio lá
-    const storageRecipesInProgress = JSON
-      .parse(localStorage.getItem('inProgressRecipes') || 'null') ?? '[]';
-    setRecipeInProgress(storageRecipesInProgress);
-  }, [setRecipeInProgress]);
+  const isRecipeInProgress = () => {
+    if (!recipeId) {
+      return false;
+    }
+    const localStorageIngredients = localStorage.getItem('inProgressRecipes');
+    if (localStorageIngredients) {
+      const inProgressRecipes = JSON.parse(localStorageIngredients);
+      return (
+        (inProgressRecipes.meals && recipeId in inProgressRecipes.meals)
+        || (inProgressRecipes.drinks && recipeId in inProgressRecipes.drinks)
+      );
+    }
+    return false;
+  };
 
-  if (recipesList.length === 0) return;
+  const handleStartRecipeClick = () => {
+    if (isRecipeInProgress()) {
+      if (page === 'Meal') {
+        navigate(`/meals/${recipeId}/in-progress`);
+      } else if (page === 'Drink') {
+        navigate(`/drinks/${recipeId}/in-progress`);
+      }
+    } else if (page === 'Meal') {
+      navigate(`/meals/${recipeId}/in-progress`);
+    } else if (page === 'Drink') {
+      navigate(`/drinks/${recipeId}/in-progress`);
+    }
+  };
 
-  if (page === 'Meal') {
-    return (
-      recipeInProgress.meals.idMeal.length !== 0 ? (
-        <Link to={ `/meals/:${recipeId}/in-progress` }>
-          <button
-            style={ { position: 'fixed', bottom: '0px' } }
-            data-testid="start-recipe-btn"
-          >
-            Continue Recipe
-          </button>
-        </Link>
-      ) : (
-        <button
-          style={ { position: 'fixed', bottom: '0px' } }
-          data-testid="start-recipe-btn"
-        >
-          Start Recipe
-        </button>
-      )
-    );
-  }
+  if (recipesList.length === 0) return null;
 
-  if (page === 'Drink') {
-    return (
-      recipeInProgress.drinks.idDrink.length !== 0 ? (
-        <Link to={ `/drinks/:${recipeId}/in-progress` }>
-          <button
-            style={ { position: 'fixed', bottom: '0px' } }
-            data-testid="start-recipe-btn"
-          >
-            Continue Recipe
-          </button>
-        </Link>
-      ) : (
-        <button
-          style={ { position: 'fixed', bottom: '0px' } }
-          data-testid="start-recipe-btn"
-        >
-          Start Recipe
-        </button>
-      )
-    );
-  }
+  return (
+    <button
+      style={ { position: 'fixed', bottom: '0px' } }
+      data-testid="start-recipe-btn"
+      onClick={ handleStartRecipeClick }
+    >
+      {isRecipeInProgress() ? 'Continue Recipe' : 'Start Recipe'}
+    </button>
+  );
 }
 
 export default ButtonRecipeStart;

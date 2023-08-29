@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { ID_MEALS_LINK } from '../helpers/links';
-import { IngredientsType, MealType, CheckedIngredient, DoneRecipesLocal } from '../types';
+import { IngredientsType, MealType, DoneRecipesLocal, InProgressRecipes } from '../types';
 import shareBtn from '../images/shareBtn.svg';
 import likeBtn from '../images/likeBtn.svg';
 
@@ -10,7 +10,8 @@ function DetailsFoodInProgress() {
   const { id } = useParams<{ id: string }>();
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [linkCopied, setLinkCopied] = useState(false);
-  const [ischecked, setIschecked] = useState<CheckedIngredient[]>([]);
+  const [ischecked,
+    setIschecked] = useState<InProgressRecipes>({ meals: {}, drinks: {} });
   const [ingredients, setIngredients] = useState<IngredientsType[]>([]);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
@@ -20,7 +21,6 @@ function DetailsFoodInProgress() {
     setMealRecipe(response.meals[0]);
   };
 
-  // salva a receita pronta no local storage, chave doneRecié
   const handleSaveInLocalStorage = async () => {
     const doneRecipe: DoneRecipesLocal = {
       id: mealRecipe?.idMeal,
@@ -82,22 +82,20 @@ function DetailsFoodInProgress() {
       .catch((err) => console.error('Erro ao copiar: ', err));
   };
 
-  const handleCheck = (i: any) => {
-    const newCheckedIngredientsMap = [...ischecked];
+  const handleCheck = (i: number) => {
+    const newCheckedIngredientsMap = { ...ischecked };
     if (mealRecipe) {
-      const recipeId = mealRecipe?.idMeal;
-      const existingRecipeIndex = newCheckedIngredientsMap
-        .findIndex((item) => item.recipeId === recipeId);
+      const recipeId = mealRecipe.idMeal;
 
-      if (existingRecipeIndex === -1) {
-        newCheckedIngredientsMap.push({ recipeId, ingredientsChecked: { [i]: true } });
+      if (!newCheckedIngredientsMap.meals[recipeId]) {
+        newCheckedIngredientsMap.meals[recipeId] = [];
+      }
+
+      if (!newCheckedIngredientsMap.meals[recipeId].includes(i)) {
+        newCheckedIngredientsMap.meals[recipeId].push(i);
       } else {
-        const existingChecked = newCheckedIngredientsMap[existingRecipeIndex]
-          .ingredientsChecked || {};
-        newCheckedIngredientsMap[existingRecipeIndex].ingredientsChecked = {
-          ...existingChecked,
-          [i]: !existingChecked[i],
-        };
+        const indexToRemove = newCheckedIngredientsMap.meals[recipeId].indexOf(i);
+        newCheckedIngredientsMap.meals[recipeId].splice(indexToRemove, 1);
       }
 
       setIschecked(newCheckedIngredientsMap);
@@ -105,11 +103,10 @@ function DetailsFoodInProgress() {
   };
 
   const getCheckedStatus = (index: number) => {
-    const recipeId = mealRecipe?.idMeal;
-    const existingRecipe = ischecked.find((item) => item.recipeId === recipeId);
-
-    return existingRecipe
-      && existingRecipe.ingredientsChecked && existingRecipe.ingredientsChecked[index];
+    if (mealRecipe && ischecked.meals[mealRecipe.idMeal]) {
+      return ischecked.meals[mealRecipe.idMeal].includes(index);
+    }
+    return false;
   };
 
   return (
@@ -173,6 +170,7 @@ function DetailsFoodInProgress() {
         <button
           data-testid="finish-recipe-btn"
           onClick={ handleSaveInLocalStorage }
+          disabled={ !ingredients.every((ingredient, index) => getCheckedStatus(index)) }
         >
           Finish Recipe
         </button>

@@ -17,12 +17,8 @@ export type DoneRecipesLocal = {
 };
 
 export type InProgressRecipes = {
-  drinks: {
-    idDrink: string[],
-  },
-  meals: {
-    idMeal: string[],
-  }
+  meals: { [recipeId: string]: number[] };
+  drinks: { [recipeId: string]: number[] };
 };
 
 export type DrinkType = {
