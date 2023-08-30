@@ -96,7 +96,6 @@ function FavoriteRecipeCard({ i, recipe }: CardProp) {
       </div>
       <div>
         <button
-          // data-testid={ `${i}-horizontal-share-btn` }
           onClick={
                   () => handleShareBtn(urlRecipe)
                 }

@@ -1,28 +1,30 @@
 import { useEffect, useState } from 'react';
 import FavoriteRecipeCard from '../components/FavoriteRecipeCard';
-import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { Favorites, useRecipeContext } from '../context/search-results-context';
+import mealIcon from '../images/foodIcon.svg';
+import drinkIcon from '../images/searchDrinkIcon.svg';
+import searchIcon from '../images/allIcon.svg';
 
 function FavoriteRecipe() {
   const [favsList, setFavsList] = useState<Favorites[]>([]);
+  const [filteredFavsList, setFilteredFavsList] = useState<Favorites[]>([]);
   const { favoriteRecipes } = useRecipeContext();
 
-  const getLS = () => {
+  useEffect(() => {
     const favItmesLS = JSON.parse(localStorage.getItem('favoriteRecipes') as string);
     setFavsList(favItmesLS);
-  };
-
-  const getFilteredRecipes = (recipeType: string) => {
-    getLS();
-    console.log(favsList);
-    const newList = favsList.filter((recipe) => recipe.type === recipeType);
-    setFavsList(newList);
-  };
-
-  useEffect(() => {
-    getLS();
+    setFilteredFavsList(favItmesLS);
   }, [favoriteRecipes]);
+
+  const filterRecipes = (recipeType: string) => {
+    if (recipeType === 'all') {
+      setFilteredFavsList(favsList);
+    } else {
+      const filteredRecipes = favsList.filter((recipe) => recipe.type === recipeType);
+      setFilteredFavsList(filteredRecipes);
+    }
+  };
 
   return (
     <>
@@ -30,26 +32,28 @@ function FavoriteRecipe() {
       <div>
         <button
           data-testid="filter-by-all-btn"
-          onClick={ () => getLS() }
+          onClick={ () => filterRecipes('all') }
         >
-          all
+          <img src={ searchIcon } alt="" />
         </button>
         <button
           data-testid="filter-by-meal-btn"
-          onClick={ () => getFilteredRecipes('meal') }
+          onClick={ () => filterRecipes('meal') }
         >
-          Meals
+          <img src={ mealIcon } alt="Icone de Comida" />
         </button>
         <button
           data-testid="filter-by-drink-btn"
-          onClick={ () => getFilteredRecipes('drink') }
+          onClick={ () => filterRecipes('drink') }
         >
-          Drinks
+          <img src={ drinkIcon } alt="Icone de Bebidas" />
         </button>
       </div>
-      {favsList.map((recipe, i) => (
-        <FavoriteRecipeCard key={ i } i={ i } recipe={ recipe } />
-      ))}
+      { filteredFavsList
+        ? filteredFavsList.map((recipe, i) => (
+          <FavoriteRecipeCard key={ i } i={ i } recipe={ recipe } />
+        ))
+        : <h3>Nenhuma receita adicionada aos favoritos.</h3> }
     </>
   );
 }
