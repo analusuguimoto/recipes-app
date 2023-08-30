@@ -25,10 +25,10 @@ function DetailsFoodInProgress() {
     const realDate = new Date().toISOString();
     const tagString = mealRecipe?.strTags;
     let tagArray;
+    console.log(tagArray);
     if (tagString) {
       tagArray = tagString.split(',');
     }
-
     const doneRecipe: DoneRecipesLocal = {
       id: mealRecipe?.idMeal,
       type: 'meal',
