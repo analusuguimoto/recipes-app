@@ -4,12 +4,12 @@ import shareIcon from '../images/shareIcon.svg';
 
 function MealRecipeDone() {
   const [recipesList, setRecipeList] = useState([] as DoneRecipesLocal[]);
-  const currentUrl = window.location.href;
+  const [linkCopied, setLinkCopied] = useState(false);
 
-  const copyToClipboard = () => {
+  const copyToClipboard = (currentUrl:string) => {
     navigator.clipboard.writeText(currentUrl)
       .then(() => {
-        alert('Link copied!');
+        setLinkCopied(true);
       })
       .catch((err) => console.error('Erro ao copiar: ', err));
   };
@@ -26,6 +26,7 @@ function MealRecipeDone() {
       {recipesList.map((recipe, index) => (
         <div key={ index }>
           <img
+            width="100px"
             data-testid={ `${index}-horizontal-image` }
             src={ recipe.image }
             alt="renderiza o card"
@@ -40,18 +41,20 @@ function MealRecipeDone() {
             {recipe.doneDate}
           </p>
           <button
-            data-testid={ `${index}-horizontal-share-btn` }
-            onClick={ copyToClipboard }
+            onClick={ () => copyToClipboard(`http://localhost:3000/${recipe.type}s/${recipe.id}`) }
           >
-            <img
-              src={ shareIcon }
-              alt="shareIcon"
-            />
+            { !linkCopied
+              ? <img
+                  src={ shareIcon }
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  alt="Botão de Compartilhamento"
+              />
+              : <span>Link copied!</span>}
           </button>
           {recipe.tags?.map((tag, i) => (
             <li
               key={ i }
-              data-testid={ `${index}-${tag}-horizontal-tag>` }
+              data-testid={ `${index}-${tag}-horizontal-tag` }
             >
               {tag}
             </li>
