@@ -34,8 +34,6 @@ function DoneRecipes() {
     setFilterList(storageDoneRecipes);
   }, []);
 
-  if (recipesList.length === 0) return;
-
   return (
     <>
       <Header title="Done Recipes" iconSearch={ false } iconProfile />
