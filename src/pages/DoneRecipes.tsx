@@ -55,7 +55,7 @@ function DoneRecipes() {
       >
         Drinks
       </button>
-      {filterList.map((recipe, index) => (
+      { filterList ? filterList.map((recipe, index) => (
         <div key={ index }>
           <Link to={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }>
             <img
@@ -101,7 +101,7 @@ function DoneRecipes() {
               : <span>Link copied!</span>}
           </button>
         </div>
-      ))}
+      )) : (<h3>Nenhuma receita enconytrada</h3>) }
       <Footer />
     </>
   );
