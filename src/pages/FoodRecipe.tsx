@@ -9,11 +9,13 @@ import { CATEGORY_MEALS_LINK, FILTER_MEALS_LINK } from '../helpers/links';
 
 function FoodRecipe() {
   const { mealResults, updateMealState, fetchMeals } = useRecipeContext();
+  console.log('aqui', mealResults);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [checkCategory, setCheckCategory] = useState('');
 
   const fetchCategory = async () => {
     const response = await fetchApi(CATEGORY_MEALS_LINK);
+    console.log(response);
     setCategories(response.meals);
   };
 
