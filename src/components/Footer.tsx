@@ -3,7 +3,10 @@ import '../footer.css';
 function Footer() {
   return (
     <footer data-testid="footer" className="footer">
-      <a href="/drinks">
+      <a
+        href="/drinks"
+        data-testid="drinks-bottom-link"
+      >
         <img
           src="/src/images/drinkIcon.svg"
           alt="Bebida"

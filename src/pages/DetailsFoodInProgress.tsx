@@ -130,7 +130,6 @@ function DetailsFoodInProgress() {
 
   const handleFavoriteMeal = () => {
     const checkFav = favoriteRecipes?.some((item) => item.id === mealRecipe?.idMeal);
-    console.log(checkFav, mealRecipe?.idMeal);
 
     if (checkFav) {
       setIsFavorite(false);
