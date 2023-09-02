@@ -1,8 +1,8 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithRouter } from './renderWith';
-import App from '../App';
-import Header from '../components/Header';
+import { renderWithRouter } from '../renderWith';
+import App from '../../App';
+import Header from '../../components/Header';
 
 describe('Verifica se o header renderiza corretamente os elementos', () => {
   test('Verifica os elementos do header', () => {

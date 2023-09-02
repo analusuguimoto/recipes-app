@@ -2,10 +2,10 @@ import React from 'react';
 import { vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as router from 'react-router';
-import { renderWithRouter } from './renderWith';
-import MainScreenFood from '../pages/MainScreenFood';
-import MainScreenDrink from '../pages/MainScreenDrink';
-import ButtonRecipeStart from '../components/ButtonRecipeStart';
+import { renderWithRouter } from '../renderWith';
+import MainScreenFood from '../../pages/MainScreenFood';
+import MainScreenDrink from '../../pages/MainScreenDrink';
+import ButtonRecipeStart from '../../components/ButtonRecipeStart';
 
 const startRecipeBtn = 'start-recipe-btn';
 

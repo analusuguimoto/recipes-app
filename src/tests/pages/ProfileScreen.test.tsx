@@ -2,8 +2,8 @@ import React from 'react';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/react';
-import { renderWithRouter } from './renderWith';
-import Profile from '../pages/Profile';
+import { renderWithRouter } from '../renderWith';
+import Profile from '../../pages/Profile';
 
 describe('Profile screen', () => {
   it('renders user email and buttons', () => {
