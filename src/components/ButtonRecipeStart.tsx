@@ -21,14 +21,13 @@ function ButtonRecipeStart({ page, recipeId }: PropType) {
     if (!recipeId) {
       return false;
     }
+
     const localStorageIngredients = localStorage.getItem('inProgressRecipes');
     if (localStorageIngredients) {
       const inProgressRecipes = JSON.parse(localStorageIngredients);
-      return (
-        (inProgressRecipes.meals && recipeId in inProgressRecipes.meals)
-        || (inProgressRecipes.drinks && recipeId in inProgressRecipes.drinks)
-      );
+      return inProgressRecipes.meals?.[recipeId] || inProgressRecipes.drinks?.[recipeId];
     }
+
     return false;
   };
 
