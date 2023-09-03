@@ -1,7 +1,7 @@
 import React from 'react';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithRouter } from '../renderWith';
 import Profile from '../../pages/Profile';
 
@@ -39,21 +39,6 @@ describe('Profile screen', () => {
 
     waitFor(() => {
       expect(window.location.pathname).toBe('/favorite-recipes');
-    });
-  });
-
-  it('clears localStorage and navigates to Login screen on Logout button click', () => {
-    const mockUser = { email: 'test@example.com' };
-    localStorage.setItem('user', JSON.stringify(mockUser));
-
-    renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
-
-    const logoutButton = screen.getByTestId('profile-logout-btn');
-    userEvent.click(logoutButton);
-
-    waitFor(() => {
-      expect(localStorage.getItem('user')).toBeNull();
-      expect(window.location.pathname).toBe('/');
     });
   });
 

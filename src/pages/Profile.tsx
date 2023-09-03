@@ -16,8 +16,8 @@ function Profile() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.clear();
     navigate('/');
+    localStorage.clear();
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from 'react';
+import { CategoryType } from '../types';
 
 type Meal = {
   idMeal: string;
@@ -33,6 +34,7 @@ type RecipeContextType = {
   fetchDrinks: () => void;
   favoriteRecipes: Favorites[];
   setFavoriteRecipes: React.Dispatch<React.SetStateAction<Favorites[]>>;
+  categories: CategoryType[];
 };
 
 const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
@@ -66,6 +68,12 @@ export function RecipeContextProviderTest({ children }: { children: React.ReactN
     },
   ];
 
+  const fakeCategories: CategoryType[] = [
+    { strCategory: 'Category1' },
+    { strCategory: 'Category2' },
+    { strCategory: 'Category3' },
+  ];
+
   return (
     <RecipeContext.Provider
       value={ {
@@ -79,6 +87,7 @@ export function RecipeContextProviderTest({ children }: { children: React.ReactN
         fetchDrinks: () => {},
         favoriteRecipes: fakeFavoriteRecipes,
         setFavoriteRecipes: () => {},
+        categories: fakeCategories,
       } }
     >
       {children}

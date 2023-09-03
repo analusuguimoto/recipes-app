@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import FavoriteRecipeCard from '../../components/FavoriteRecipeCard';
 import { RecipeContextProviderTest } from '../test-context';
