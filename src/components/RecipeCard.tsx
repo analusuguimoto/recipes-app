@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css';
 
 interface RecipeCardProps {
   id: any;
@@ -12,7 +13,7 @@ function RecipeCard({ name, image, index, id }: RecipeCardProps) {
     <div data-testid={ `${index}-recipe-card` } style={ { cursor: 'pointer' } }>
       <img
         src={ image }
-        alt={ name || id }
+        alt={ name }
         data-testid={ `${index}-card-img` }
         style={ { maxWidth: '200px', height: 'auto' } }
       />

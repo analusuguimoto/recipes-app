@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
-import SearchBar from '../components/SearchBar';
-import * as mocks from '../MockDataResults';
-import { renderWithRouter } from './renderWith';
-import { RecipeProvider, useRecipeContext } from '../context/search-results-context';
+import SearchBar from '../../components/SearchBar';
+import * as mocks from '../../MockDataResults';
+import { renderWithRouter } from '../renderWith';
+import { RecipeProvider, useRecipeContext } from '../../context/search-results-context';
 
 const NAME_URL_MEALS = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
 const INGREDIENT_URL_MEALS = 'https://www.themealdb.com/api/json/v1/1/filter.php?i=';
