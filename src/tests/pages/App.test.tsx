@@ -1,8 +1,8 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from '../App';
-import { renderWithRouter } from './renderWith';
+import App from '../../App';
+import { renderWithRouter } from '../renderWith';
 
 describe('Verifica se a tela de login renderiza corretamente os elementos', () => {
   test('Verifica se é exibido um heading com o nome da aplicação', () => {
