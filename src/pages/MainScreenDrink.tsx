@@ -11,6 +11,7 @@ import likeBtn from '../images/likeBtn.svg';
 import ButtonRecipeStart from '../components/ButtonRecipeStart';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import '../styles/recipeCard.css';
 
 function MainScreenDrink() {
   const { id } = useParams<{ id: string }>();
