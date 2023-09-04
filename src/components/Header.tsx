@@ -5,7 +5,6 @@ import searchIcon from '../images/searchIcon.svg';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import SearchBar from './SearchBar';
-import logo from '../images/iconRecipe.png';
 import '../App.css';
 import '../styles/header.css';
 
@@ -66,7 +65,7 @@ function Header({ title, iconSearch, iconProfile }: PropType) {
 
       </header>
       {showSideBar === true && (<SearchBar />)}
-      <div>
+      <div className="title-wrapper">
         <h1
           data-testid="page-title"
           className="page-title"
