@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import drinkIcon from '../images/drinkIcon.svg';
+import mealIcon from '../images/mealIcon.svg';
 import SearchBar from './SearchBar';
+import logo from '../images/iconRecipe.png';
+import '../App.css';
 import '../styles/header.css';
 
 type PropType = {
@@ -15,6 +19,9 @@ function Header({ title, iconSearch, iconProfile }: PropType) {
   const [showSideBar, setShowSideBar] = useState(false);
   const showSideBarElement = () => (showSideBar === false
     ? setShowSideBar(true) : setShowSideBar(false));
+
+  const isDrinksPage = title.toUpperCase() === 'DRINKS';
+  const isMealsPage = title.toUpperCase() === 'MEALS';
 
   return (
     <>
