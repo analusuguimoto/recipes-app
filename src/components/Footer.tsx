@@ -1,26 +1,26 @@
 import '../footer.css';
 
+import { Link } from 'react-router-dom';
+
 function Footer() {
   return (
     <footer data-testid="footer" className="footer">
-      <a
-        href="/drinks"
-        data-testid="drinks-bottom-link"
-      >
+      <Link to="/drinks" data-testid="drinks-bottom-link">
         <img
           src="/src/images/drinkIcon.svg"
           alt="Bebida"
           data-testid="drinks-bottom-btn"
         />
-      </a>
-      <a href="/meals">
+      </Link>
+      <Link to="/meals">
         <img
           src="/src/images/mealIcon.svg"
           alt="Comida"
           data-testid="meals-bottom-btn"
         />
-      </a>
+      </Link>
     </footer>
   );
 }
+
 export default Footer;

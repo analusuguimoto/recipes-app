@@ -1,17 +1,23 @@
-import { MemoryRouter } from 'react-router-dom';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import { renderWithRouter } from './renderWith';
-// import Recipes from '../pages/Recipes';
 import App from '../App';
 import { RecipeProvider } from '../context/search-results-context';
-import { meals, mealsChickenIngredient } from '../MockDataResults';
+import { fetchMockData } from '../MockRecipes';
 
 const emailTest = 'test@test.co';
 const passwordTest = 'sdwsdasd12!';
 
 describe('Testes de Recipes - Rota Meals', async () => {
+  beforeEach(() => {
+    global.fetch = vi.fn(fetchMockData) as unknown as any;
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   test('Testa se a seção de Meals funciona corretamente', async () => {
     renderWithRouter(
       <RecipeProvider>
@@ -47,16 +53,16 @@ describe('Testes de Recipes - Rota Meals', async () => {
     expect(chickenBtn).toBeInTheDocument();
 
     await userEvent.click(chickenBtn);
-    const chickenRecipe = await screen.findByText(/ayam percik/i);
+    const chickenRecipe = await screen.findByText(/brown stew chicken/i);
     expect(chickenRecipe).toBeInTheDocument();
 
     await userEvent.click(beefBtn);
-    const beefRecipe = await screen.findByText(/beef asado/i);
+    const beefRecipe = await screen.findByText(/beef and mustard pie/i);
     expect(beefRecipe).toBeInTheDocument();
 
-    await userEvent.click(beefBtn);
-    const sushi = await screen.findByRole('img', { name: /sushi/i });
-    expect(sushi).toBeInTheDocument();
+    await userEvent.click(allBtn);
+    const corba = await screen.findByRole('img', { name: /corba/i });
+    expect(corba).toBeInTheDocument();
   });
 
   test('verifica se a API é chamada', async () => {
@@ -65,10 +71,6 @@ describe('Testes de Recipes - Rota Meals', async () => {
         <App />
       </RecipeProvider>,
     );
-
-    // global.fetch = vi.fn().mockResolvedValue({
-    //   json: async () => meals,
-    // });
 
     const loginButton = screen.getByRole('button', { name: 'Entrar' });
     expect(loginButton).toBeInTheDocument();
@@ -84,10 +86,21 @@ describe('Testes de Recipes - Rota Meals', async () => {
     expect(loginButton).not.toBeDisabled();
 
     await userEvent.click(loginButton);
-    // expect(global.fetch).toHaveBeenCalledTimes(1);
+
+    const corba = await screen.findByRole('img', { name: /corba/i });
+    expect(corba).toBeInTheDocument();
+
+    const dessertBtn = await screen.findByRole('button', { name: /dessert/i });
+    expect(dessertBtn).toBeInTheDocument();
+    await userEvent.click(dessertBtn);
+    const apple = await screen.findByRole('img', { name: /apple frangipan tart/i });
+    expect(apple).toBeInTheDocument();
+    await userEvent.click(dessertBtn);
+    const corba2 = await screen.findByRole('img', { name: /corba/i });
+    expect(corba2).toBeInTheDocument();
   });
 
-  test.only('verifica se a pag de drinks funciona corretamente', async () => {
+  test('verifica se a pag de drinks funciona corretamente', async () => {
     renderWithRouter(
       <RecipeProvider>
         <App />
@@ -115,9 +128,32 @@ describe('Testes de Recipes - Rota Meals', async () => {
     const allBtn = await screen.findByRole('button', { name: /all/i });
     expect(allBtn).toBeInTheDocument();
 
-    await waitFor(() => {
-      const coctailBtn = screen.getByRole('button', { name: /cocktail/i });
-      expect(coctailBtn).toBeInTheDocument();
-    });
+    const coctailBtn = await screen.findByRole('button', { name: /cocktail/i });
+    expect(coctailBtn).toBeInTheDocument();
+
+    const ordinaryBtn = await screen.findByRole('button', { name: /ordinary drink/i });
+    expect(ordinaryBtn).toBeInTheDocument();
+
+    const shakeBtn = await screen.findByRole('button', { name: /shake/i });
+    expect(shakeBtn).toBeInTheDocument();
+
+    const ggDrink = await screen.findByRole('img', { name: /gg/i });
+    expect(ggDrink).toBeInTheDocument();
+
+    await userEvent.click(coctailBtn);
+    const drink155 = await screen.findByRole('img', { name: /155 belmont/i });
+    expect(drink155).toBeInTheDocument();
+
+    await userEvent.click(allBtn);
+    const ggDrink2 = await screen.findByRole('img', { name: /gg/i });
+    expect(ggDrink2).toBeInTheDocument();
+
+    await userEvent.click(shakeBtn);
+    const avalanche = await screen.findByRole('img', { name: /avalanche/i });
+    expect(avalanche).toBeInTheDocument();
+
+    await userEvent.click(shakeBtn);
+    const ggDrink3 = await screen.findByRole('img', { name: /gg/i });
+    expect(ggDrink3).toBeInTheDocument();
   });
 });
