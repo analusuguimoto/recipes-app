@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
+import '../styles/recipeCard.css';
 
 interface RecipeListProps {
   recipes: Array<{
@@ -15,7 +16,7 @@ function RecipeList({ recipes }: RecipeListProps) {
 
   return (
 
-    <div>
+    <div className="recipe-card-container">
       {limitedRecipes.map((recipe, index) => (
         <Link
           to={ `/meals/${recipe.idMeal}` }
