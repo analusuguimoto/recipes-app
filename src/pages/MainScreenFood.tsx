@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { fetchApi } from '../helpers/fetchApi';
 import { DRINKS_LINK, ID_MEALS_LINK } from '../helpers/links';
 import { useRecipeContext, Drink } from '../context/search-results-context';
@@ -15,7 +15,8 @@ function MainScreenFood() {
   const { id } = useParams<{ id: string }>();
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [linkCopied, setLinkCopied] = useState(false);
-  const currentUrl = window.location.href;
+  const location = useLocation();
+  const currentUrl = location.pathname;
   const [drinkRecommendations, setDrinkRecommendations] = useState<Drink[]>([]);
   const [ingredients, setIngredients] = useState<string[]>([]);
   const { favoriteRecipes, setFavoriteRecipes } = useRecipeContext();
@@ -73,7 +74,6 @@ function MainScreenFood() {
 
   const handleFavoriteMeal = () => {
     const checkFav = favoriteRecipes?.some((item) => item.id === mealRecipe?.idMeal);
-    console.log(checkFav, mealRecipe?.idMeal);
 
     if (checkFav) {
       setIsFavorite(false);

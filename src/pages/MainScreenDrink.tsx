@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { ID_DRINKS_LINK, MEALS_LINK } from '../helpers/links';
 import { fetchApi } from '../helpers/fetchApi';
 import MealRecommendationCard from '../components/MealRecommendationCard';
@@ -16,7 +16,8 @@ function MainScreenDrink() {
   const { id } = useParams<{ id: string }>();
   const [drinkRecipe, setDrinkRecipe] = useState<DrinkType>();
   const [linkCopied, setLinkCopied] = useState(false);
-  const currentUrl = window.location.href;
+  const location = useLocation();
+  const currentUrl = location.pathname;
   const [mealRecommendations, setMealRecommendations] = useState<Meal[]>([]);
   const [ingredients, setIngredients] = useState<string[]>([]);
   const { favoriteRecipes, setFavoriteRecipes } = useRecipeContext();
@@ -61,7 +62,6 @@ function MainScreenDrink() {
 
     if (getFromLS) {
       setFavoriteRecipes(getFromLS);
-      console.log(favoriteRecipes);
     }
   }, []);
 

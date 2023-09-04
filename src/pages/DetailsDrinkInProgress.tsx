@@ -88,7 +88,6 @@ function DetailsDrinkInProgress() {
       }
     }
     setIngredients(ingredientsArray);
-    console.log(drinkRecipe);
   }, [drinkRecipe]);
 
   const handleShareBtn = () => {
@@ -131,7 +130,6 @@ function DetailsDrinkInProgress() {
 
     if (getFromLS) {
       setFavoriteRecipes(getFromLS);
-      console.log(favoriteRecipes);
     }
   }, []);
 
