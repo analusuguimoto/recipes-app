@@ -5,6 +5,7 @@ import { renderWithRouter } from '../renderWith';
 import App from '../../App';
 import { RecipeProvider } from '../../context/search-results-context';
 import { fetchMockData } from '../../MockRecipes';
+//
 
 const emailTest = 'test@test.co';
 const passwordTest = 'sdwsdasd12!';
