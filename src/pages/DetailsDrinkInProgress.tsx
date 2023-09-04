@@ -170,10 +170,16 @@ function DetailsDrinkInProgress() {
 
   return (
     <>
-      <nav>
-        <h1 data-testid="recipe-category">{ drinkRecipe?.strCategory }</h1>
+      <nav className="nav-container">
+        <h1
+          className="nav-title"
+          data-testid="recipe-category"
+        >
+          { drinkRecipe?.strCategory }
+        </h1>
         <div>
           <button
+            className="share-btn"
             data-testid="share-btn"
             onClick={ () => handleShareBtn() }
           >
@@ -182,6 +188,7 @@ function DetailsDrinkInProgress() {
           </button>
           <button
             onClick={ handleFavoriteDrink }
+            className="like-btn"
           >
             <img
               data-testid="favorite-btn"
@@ -191,16 +198,26 @@ function DetailsDrinkInProgress() {
           </button>
         </div>
       </nav>
-      <h2 data-testid="recipe-title">{drinkRecipe?.strDrink}</h2>
-      <img
-        data-testid="recipe-photo"
-        src={ drinkRecipe?.strDrinkThumb }
-        alt={ drinkRecipe?.strDrink }
-        style={ { maxWidth: '200px', height: 'auto' } }
-      />
-      <div>
-        <h3>Ingredients</h3>
-        <ul>
+      <div className="recipe-image-container">
+        <img
+          className="recipe-image"
+          data-testid="recipe-photo"
+          src={ drinkRecipe?.strDrinkThumb }
+          alt={ drinkRecipe?.strDrink }
+        />
+        <h2
+          className="recipe-name"
+          data-testid="recipe-title"
+        >
+          {drinkRecipe?.strDrink}
+        </h2>
+      </div>
+      <div className="body-container">
+        <h3 className="body-title">Ingredients</h3>
+        <ul
+          className="ingredient-list"
+          style={ { listStyleType: 'none' } }
+        >
           {ingredients.map((ingredient, i) => (
             <li key={ i }>
               <label
@@ -214,6 +231,7 @@ function DetailsDrinkInProgress() {
                 }
               >
                 <input
+                  style={ { marginRight: '10px', marginLeft: '-12px' } }
                   type="checkbox"
                   id="ingredient"
                   onChange={ () => handleCheck(i) }
@@ -225,12 +243,18 @@ function DetailsDrinkInProgress() {
           ))}
         </ul>
       </div>
-      <div>
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{drinkRecipe?.strInstructions}</p>
+      <div className="body-container">
+        <h3 className="body-title">Instructions</h3>
+        <p
+          className="instructions-text"
+          data-testid="instructions"
+        >
+          {drinkRecipe?.strInstructions}
+        </p>
       </div>
       <Link to="/done-recipes">
         <button
+          className="btn-finish-recipe"
           data-testid="finish-recipe-btn"
           onClick={ handleSaveInLocalStorage }
           disabled={ !ingredients.every((ingredient, index) => getCheckedStatus(index)) }

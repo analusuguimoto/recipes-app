@@ -16,7 +16,6 @@ function DrinkRecommendationCard({ recommendation,
         src={ image }
         alt={ recommendation.strDrink }
         className="recommendation-image"
-        width="100px"
       />
       <h3 data-testid={ `${index}-recommendation-title` }>{recommendation.strDrink}</h3>
     </div>

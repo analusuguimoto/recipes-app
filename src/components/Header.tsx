@@ -4,6 +4,7 @@ import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
+import logo from '../images/logotest-removebg-preview.png';
 import SearchBar from './SearchBar';
 import '../App.css';
 import '../styles/header.css';
@@ -24,7 +25,7 @@ function Header({ title, iconSearch, iconProfile }: PropType) {
 
   return (
     <>
-      <header className="header-title">
+      <header className="header">
         <div className="header-title">
           <img
             src={ logo }
@@ -32,7 +33,7 @@ function Header({ title, iconSearch, iconProfile }: PropType) {
             className="header-logo"
           />
           <span>
-            <em>RECIPES</em>
+            <em>e-Cook</em>
             {' '}
             <strong>app</strong>
           </span>
@@ -44,12 +45,14 @@ function Header({ title, iconSearch, iconProfile }: PropType) {
               <img
                 src={ profileIcon }
                 alt="ícone de perfil"
+                style={ { color: 'blue' } }
                 data-testid="profile-top-btn"
               />
             </Link>
           )}
           {iconSearch === true && (
             <button
+              className="btn-search"
               type="submit"
               onClick={ showSideBarElement }
             >
@@ -62,14 +65,10 @@ function Header({ title, iconSearch, iconProfile }: PropType) {
             </button>
           )}
         </div>
-
       </header>
       {showSideBar === true && (<SearchBar />)}
       <div className="title-wrapper">
-        <h1
-          data-testid="page-title"
-          className="page-title"
-        >
+        <h1 className="page-title" data-testid="page-title">
           {title}
         </h1>
         <div className="title-icon">

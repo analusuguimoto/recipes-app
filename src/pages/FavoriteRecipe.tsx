@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import FavoriteRecipeCard from '../components/FavoriteRecipeCard';
 import Header from '../components/Header';
 import { Favorites, useRecipeContext } from '../context/search-results-context';
-import mealIcon from '../images/foodIcon.svg';
-import drinkIcon from '../images/searchDrinkIcon.svg';
-import searchIcon from '../images/allIcon.svg';
+import '../styles/donePage.css';
 
 function FavoriteRecipe() {
   const [favsList, setFavsList] = useState<Favorites[]>([]);
@@ -29,24 +27,24 @@ function FavoriteRecipe() {
   return (
     <>
       <Header title="Favorite Recipes" iconSearch={ false } iconProfile />
-      <div>
+      <div className="buttn-container">
         <button
           data-testid="filter-by-all-btn"
           onClick={ () => filterRecipes('all') }
         >
-          <img src={ searchIcon } alt="" />
+          All
         </button>
         <button
           data-testid="filter-by-meal-btn"
           onClick={ () => filterRecipes('meal') }
         >
-          <img src={ mealIcon } alt="Icone de Comida" />
+          Meals
         </button>
         <button
           data-testid="filter-by-drink-btn"
           onClick={ () => filterRecipes('drink') }
         >
-          <img src={ drinkIcon } alt="Icone de Bebidas" />
+          Drinks
         </button>
       </div>
       { filteredFavsList

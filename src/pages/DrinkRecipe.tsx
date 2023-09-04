@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import { fetchApi } from '../helpers/fetchApi';
 import { CATEGORY_DRINKS_LINK, FILTER_DRINKS_LINK } from '../helpers/links';
 import { CategoryType } from '../types';
+import '../styles/recipeDisplayScreen.css';
 
 function DrinkRecipe() {
   const { drinkResults, updateDrinkState, fetchDrinks } = useRecipeContext();
@@ -36,7 +37,7 @@ function DrinkRecipe() {
   return (
     <>
       <Header title="Drinks" iconProfile iconSearch />
-      <div>
+      <div className="btn-container">
         <button
           data-testid="All-category-filter"
           onClick={ () => fetchDrinks() }

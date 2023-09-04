@@ -11,7 +11,7 @@ import likeBtn from '../images/likeBtn.svg';
 import ButtonRecipeStart from '../components/ButtonRecipeStart';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import '../styles/recipeCard.css';
+import '../styles/detailScreen.css';
 
 function MainScreenDrink() {
   const { id } = useParams<{ id: string }>();
@@ -109,10 +109,15 @@ function MainScreenDrink() {
 
   return (
     <>
-      <nav>
-        <h1>{ drinkRecipe?.strCategory }</h1>
+      <nav className="nav-container">
+        <h1
+          className="nav-title"
+        >
+          { drinkRecipe?.strCategory }
+        </h1>
         <div>
           <button
+            className="share-btn"
             data-testid="share-btn"
             onClick={ () => handleShareBtn() }
           >
@@ -120,6 +125,7 @@ function MainScreenDrink() {
               : <span>Link copied!</span>}
           </button>
           <button
+            className="like-btn"
             onClick={ handleFavoriteDrink }
           >
             <img
@@ -130,17 +136,33 @@ function MainScreenDrink() {
           </button>
         </div>
       </nav>
-      <h2 data-testid="recipe-title">{ drinkRecipe?.strDrink }</h2>
-      <img
-        data-testid="recipe-photo"
-        src={ drinkRecipe?.strDrinkThumb }
-        alt={ drinkRecipe?.strDrink }
-        style={ { maxWidth: '200px', height: 'auto' } }
-      />
-      <p data-testid="recipe-category">{ drinkRecipe?.strAlcoholic }</p>
-      <div>
-        <h3>Ingredients</h3>
-        <ul>
+      <div
+        className="recipe-image-container"
+      >
+        <img
+          className="recipe-image"
+          data-testid="recipe-photo"
+          src={ drinkRecipe?.strDrinkThumb }
+          alt={ drinkRecipe?.strDrink }
+        />
+        <h2
+          className="recipe-name"
+          data-testid="recipe-title"
+        >
+          { drinkRecipe?.strDrink }
+        </h2>
+      </div>
+      <p
+        className="body-title"
+        data-testid="recipe-category"
+        style={ { margin: '20px', display: 'flex', justifyContent: 'flex-end' } }
+      >
+        { drinkRecipe?.strAlcoholic }
+
+      </p>
+      <div className="body-container">
+        <h3 className="body-title">Ingredients</h3>
+        <ul className="ingredient-list">
           {ingredients.map((ingredient, i) => (
             <li
               key={ i }
@@ -151,12 +173,18 @@ function MainScreenDrink() {
           ))}
         </ul>
       </div>
-      <div>
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{ drinkRecipe?.strInstructions }</p>
+      <div className="body-container">
+        <h3 className="body-title">Instructions</h3>
+        <p
+          className="instructions-text"
+          data-testid="instructions"
+        >
+          { drinkRecipe?.strInstructions }
+
+        </p>
       </div>
-      <div>
-        <h3>Recommendations</h3>
+      <div className="rec-container">
+        <h3 className="rec-title">Recommendations</h3>
         <div className="recommendation-carousel">
           {mealRecommendations.slice(0, 6).map((meal, index) => (
             <MealRecommendationCard

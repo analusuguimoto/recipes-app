@@ -1,0 +1,38 @@
+.btn-recipe {
+  margin: 0 20px 10px 20px;
+  border: none;
+  width: 94%;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: rgb(226,153,61);
+  color: rgb(165,32,15);
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+}
+
+.btn-finish-recipe:disabled {
+  margin: 0 20px 10px 20px;
+  border: none;
+  width: 94%;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: rgb(226,153,61, 0.4);
+  color: rgb(165,32,15, 0.4);
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+}
+
+.btn-finish-recipe {
+  margin: 0 20px 10px 20px;
+  border: none;
+  width: 94%;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: rgb(226,153,61);
+  color: rgb(165,32,15);
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+}

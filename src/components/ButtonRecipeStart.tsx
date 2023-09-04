@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DoneRecipesLocal } from '../types';
+import '../styles/btnStarRecipe.css';
 
 type PropType = {
   page: string;
@@ -49,6 +50,7 @@ function ButtonRecipeStart({ page, recipeId }: PropType) {
 
   return (
     <button
+      className="btn-recipe"
       style={ { position: 'fixed', bottom: '0px' } }
       data-testid="start-recipe-btn"
       onClick={ handleStartRecipeClick }

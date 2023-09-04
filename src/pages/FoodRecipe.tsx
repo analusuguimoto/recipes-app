@@ -36,7 +36,7 @@ function FoodRecipe() {
   return (
     <>
       <Header title="Meals" iconProfile iconSearch />
-      <div>
+      <div className="btn-container">
         <button
           data-testid="All-category-filter"
           onClick={ () => fetchMeals() }

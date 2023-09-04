@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import capa from '../images/capa-logi.jpg';
+import '../styles/loginScreen.css';
 
 function Login() {
   const [userEmail, setUserEmail] = useState('');
@@ -33,9 +35,9 @@ function Login() {
   };
 
   return (
-    <div className="meals">
-      <span className="logo">TRYBEATS</span>
-      <form>
+    <div className="meal">
+      <h1 className="title-login">Login</h1>
+      <form className="form-container">
         <input
           type="email"
           placeholder="Digite seu email"
@@ -49,6 +51,7 @@ function Login() {
           onChange={ (event) => setUserPassword(event.target.value) }
         />
         <button
+          className="btn-login"
           type="submit"
           data-testid="login-submit-btn"
           disabled={ !loginButton }
@@ -57,6 +60,13 @@ function Login() {
           Entrar
         </button>
       </form>
+      <div>
+        <img
+          className="foto-capa"
+          src={ capa }
+          alt=""
+        />
+      </div>
     </div>
   );
 }

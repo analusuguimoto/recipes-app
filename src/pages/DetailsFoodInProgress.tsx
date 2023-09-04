@@ -7,6 +7,7 @@ import shareBtn from '../images/shareBtn.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { useRecipeContext } from '../context/search-results-context';
+import '../styles/detailScreen.css';
 
 function DetailsFoodInProgress() {
   const { id } = useParams<{ id: string }>();
@@ -19,12 +20,10 @@ function DetailsFoodInProgress() {
   const [isFavorite, setIsFavorite] = useState(false);
   const currentUrl = window.location.href;
   const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
-
   const fetchRecipe = async () => {
     const response = await fetchApi(`${ID_MEALS_LINK}${id}`);
     setMealRecipe(response.meals[0]);
   };
-
   const handleSaveInLocalStorage = async () => {
     const realDate = new Date().toISOString();
     const tagString = mealRecipe?.strTags;
@@ -49,7 +48,6 @@ function DetailsFoodInProgress() {
     localStorage.setItem('doneRecipes', JSON
       .stringify([...prevLocalStorage, doneRecipe]));
   };
-
   useEffect(() => {
     fetchRecipe();
     const localStorageIngredients = localStorage.getItem('inProgressRecipes');
@@ -57,11 +55,9 @@ function DetailsFoodInProgress() {
       setIschecked(JSON.parse(localStorageIngredients));
     }
   }, []);
-
   useEffect(() => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(ischecked));
   }, [ischecked]);
-
   useEffect(() => {
     const ingredientsArray = [];
     if (mealRecipe) {
@@ -72,7 +68,6 @@ function DetailsFoodInProgress() {
         const medidaChave = `strMeasure${i}`;
         const ingrediente = mealRecipe[ingredientChave];
         const medida = mealRecipe[medidaChave];
-
         if (medida && ingrediente) {
           const obj = {
             medida,
@@ -84,7 +79,6 @@ function DetailsFoodInProgress() {
     }
     setIngredients(ingredientsArray);
   }, [mealRecipe]);
-
   const handleShareBtn = () => {
     navigator.clipboard.writeText(newUrl)
       .then(() => {
@@ -92,37 +86,30 @@ function DetailsFoodInProgress() {
       })
       .catch((err) => console.error('Erro ao copiar: ', err));
   };
-
   const handleCheck = (i: number) => {
     const newCheckedIngredientsMap = { ...ischecked };
     if (mealRecipe) {
       const recipeId = mealRecipe.idMeal;
-
       if (!newCheckedIngredientsMap.meals[recipeId]) {
         newCheckedIngredientsMap.meals[recipeId] = [];
       }
-
       if (!newCheckedIngredientsMap.meals[recipeId].includes(i)) {
         newCheckedIngredientsMap.meals[recipeId].push(i);
       } else {
         const indexToRemove = newCheckedIngredientsMap.meals[recipeId].indexOf(i);
         newCheckedIngredientsMap.meals[recipeId].splice(indexToRemove, 1);
       }
-
       setIschecked(newCheckedIngredientsMap);
     }
   };
-
   const getCheckedStatus = (index: number) => {
     if (mealRecipe && ischecked.meals[mealRecipe.idMeal]) {
       return ischecked.meals[mealRecipe.idMeal].includes(index);
     }
     return false;
   };
-
   useEffect(() => {
     const getFromLS = JSON.parse(localStorage.getItem('favoriteRecipes') as string);
-
     if (getFromLS) {
       setFavoriteRecipes(getFromLS);
     }
@@ -152,21 +139,23 @@ function DetailsFoodInProgress() {
       image: mealRecipe?.strMealThumb,
     }];
     setFavoriteRecipes(updatedFavRecipes);
-
     setIsFavorite(true);
-
     const favStringfy = JSON.stringify(updatedFavRecipes);
     localStorage.setItem('favoriteRecipes', favStringfy);
   };
-
   const existingRecipe = favoriteRecipes.find((item) => item.id === mealRecipe?.idMeal);
-
   return (
     <>
-      <nav>
-        <h1 data-testid="recipe-category">{ mealRecipe?.strCategory }</h1>
+      <nav className="nav-container">
+        <h1
+          className="nav-title"
+          data-testid="recipe-category"
+        >
+          { mealRecipe?.strCategory }
+        </h1>
         <div>
           <button
+            className="share-btn"
             data-testid="share-btn"
             onClick={ () => handleShareBtn() }
           >
@@ -175,6 +164,7 @@ function DetailsFoodInProgress() {
           </button>
           <button
             onClick={ handleFavoriteMeal }
+            className="like-btn"
           >
             <img
               src={ existingRecipe ? blackHeartIcon : whiteHeartIcon }
@@ -184,16 +174,26 @@ function DetailsFoodInProgress() {
           </button>
         </div>
       </nav>
-      <h2 data-testid="recipe-title">{mealRecipe?.strMeal}</h2>
-      <img
-        data-testid="recipe-photo"
-        src={ mealRecipe?.strMealThumb }
-        alt={ mealRecipe?.strMeal }
-        style={ { maxWidth: '200px', height: 'auto' } }
-      />
-      <div>
-        <h3>Ingredients</h3>
-        <ul>
+      <div className="recipe-image-container">
+        <img
+          className="recipe-image"
+          data-testid="recipe-photo"
+          src={ mealRecipe?.strMealThumb }
+          alt={ mealRecipe?.strMeal }
+        />
+        <h2
+          className="recipe-name"
+          data-testid="recipe-title"
+        >
+          {mealRecipe?.strMeal}
+        </h2>
+      </div>
+      <div className="body-container">
+        <h3 className="body-title">Ingredients</h3>
+        <ul
+          className="ingredient-list"
+          style={ { listStyleType: 'none' } }
+        >
           {ingredients.map((ingredient, i) => (
             <li
               key={ i }
@@ -205,6 +205,7 @@ function DetailsFoodInProgress() {
               }
             >
               <input
+                style={ { marginRight: '10px', marginLeft: '-12px' } }
                 type="checkbox"
                 id="ingredient"
                 onChange={ () => handleCheck(i) }
@@ -215,15 +216,21 @@ function DetailsFoodInProgress() {
           ))}
         </ul>
       </div>
-      <div>
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{mealRecipe?.strInstructions}</p>
+      <div className="body-container">
+        <h3 className="body-title">Instructions</h3>
+        <p
+          className="instructions-text"
+          data-testid="instructions"
+        >
+          {mealRecipe?.strInstructions}
+        </p>
       </div>
-      <div>
+      <div className="yt-container">
         {mealRecipe?.strYoutube ? <iframe title="recipe video" data-testid="video" width="200" height="175" src={ `https://www.youtube.com/embed/${mealRecipe?.strYoutube.split('=')[1]}` } /> : null}
       </div>
       <Link to="/done-recipes">
         <button
+          className="btn-finish-recipe"
           data-testid="finish-recipe-btn"
           onClick={ handleSaveInLocalStorage }
           disabled={ !ingredients.every((ingredient, index) => getCheckedStatus(index)) }

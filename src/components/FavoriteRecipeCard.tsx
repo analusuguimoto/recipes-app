@@ -4,6 +4,7 @@ import { Favorites, useRecipeContext } from '../context/search-results-context';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import '../styles/donePage.css';
 
 type CardProp = {
   i: number,
@@ -62,17 +63,19 @@ function FavoriteRecipeCard({ i, recipe }: CardProp) {
   const existingRecipe = favoriteRecipes.find((item) => item.id === recipe.id);
 
   return (
-    <div key={ i }>
-      <Link to={ urlRecipe }>
-        <img
-          data-testid={ `${i}-horizontal-image` }
-          src={ recipe.image }
-          alt={ recipe.name }
-          width="100px"
-        />
-      </Link>
-      <div>
+    <div key={ i } className="recipe-card">
+      <div className="recipe-image">
         <Link to={ urlRecipe }>
+          <img
+            data-testid={ `${i}-horizontal-image` }
+            src={ recipe.image }
+            alt={ recipe.name }
+            width="100px"
+          />
+        </Link>
+      </div>
+      <div className="recipe-details">
+        <Link to={ urlRecipe } className="title-fav">
           <h3
             data-testid={ `${i}-horizontal-name` }
           >
@@ -94,8 +97,9 @@ function FavoriteRecipeCard({ i, recipe }: CardProp) {
             : null
         }
       </div>
-      <div>
+      <div className="share-like-container">
         <button
+          className="share-btn-fav"
           onClick={
                   () => handleShareBtn(urlRecipe)
                 }
@@ -109,6 +113,7 @@ function FavoriteRecipeCard({ i, recipe }: CardProp) {
         </button>
 
         <button
+          className="like-btn-fav"
           onClick={ handleFavoriteMeal }
         >
           <img

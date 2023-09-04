@@ -4,6 +4,7 @@ import { DoneRecipesLocal } from '../types';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
+import '../styles/donePage.css';
 
 function DoneRecipes() {
   const [recipesList, setRecipeList] = useState([] as DoneRecipesLocal[]);
@@ -37,69 +38,84 @@ function DoneRecipes() {
   return (
     <>
       <Header title="Done Recipes" iconSearch={ false } iconProfile />
-      <button
-        onClick={ () => filterRecipes('all') }
-        data-testid="filter-by-all-btn"
-      >
-        All
-      </button>
-      <button
-        onClick={ () => filterRecipes('meal') }
-        data-testid="filter-by-meal-btn"
-      >
-        Meals
-      </button>
-      <button
-        onClick={ () => filterRecipes('drink') }
-        data-testid="filter-by-drink-btn"
-      >
-        Drinks
-      </button>
-      { filterList ? filterList.map((recipe, index) => (
-        <div key={ index }>
+      <div className="buttn-container">
+        <button
+          onClick={ () => filterRecipes('all') }
+          data-testid="filter-by-all-btn"
+        >
+          All
+        </button>
+        <button
+          onClick={ () => filterRecipes('meal') }
+          data-testid="filter-by-meal-btn"
+        >
+          Meals
+        </button>
+        <button
+          onClick={ () => filterRecipes('drink') }
+          data-testid="filter-by-drink-btn"
+        >
+          Drinks
+        </button>
+      </div>
+
+      { filterList ? filterList.map((recipe, i) => (
+        <div key={ i } className="recipe-card">
           <Link to={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }>
-            <img
-              width="100px"
-              data-testid={ `${index}-horizontal-image` }
-              src={ recipe.image }
-              alt="renderiza o card"
-            />
-            <h1 data-testid={ `${index}-horizontal-name` }>
-              {recipe.name}
-            </h1>
-          </Link>
-          {recipe.type === 'drink' && (
-            <p data-testid={ `${index}-horizontal-top-text` }>{recipe.alcoholicOrNot}</p>
-          )}
-          {recipe.type === 'meal' && (
-            <>
-              <p data-testid={ `${index}-horizontal-top-text` }>
-                {`${recipe.nationality} - ${recipe.category}`}
-              </p>
-              {recipe.tags?.map((tag, i) => (
-                <li
-                  key={ i }
-                  data-testid={ `${index}-${tag}-horizontal-tag` }
-                >
-                  {tag}
-                </li>
-              ))}
-            </>
-          )}
-          <p data-testid={ `${index}-horizontal-done-date` }>
-            {recipe.doneDate}
-          </p>
-          <button
-            onClick={ () => copyToClipboard(`http://localhost:3000/${recipe.type}s/${recipe.id}`) }
-          >
-            { !linkCopied
-              ? <img
-                  src={ shareIcon }
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  alt="Botão de Compartilhamento"
+            <div className="recipe-image">
+              <img
+                width="100px"
+                data-testid={ `${i}-horizontal-image` }
+                src={ recipe.image }
+                alt="renderiza o card"
               />
-              : <span>Link copied!</span>}
-          </button>
+            </div>
+          </Link>
+          <div className="recipe-details">
+            <Link
+              to={ `http://localhost:3000/${recipe.type}s/${recipe.id}` }
+              className="recipe-title"
+            >
+              <h1
+                data-testid={ `${i}-horizontal-name` }
+              >
+                {recipe.name}
+              </h1>
+            </Link>
+            {recipe.type === 'drink' && (
+              <p data-testid={ `${i}-horizontal-top-text` }>{recipe.alcoholicOrNot}</p>
+            )}
+            {recipe.type === 'meal' && (
+              <>
+                <p data-testid={ `${i}-horizontal-top-text` }>
+                  {`${recipe.nationality} - ${recipe.category}`}
+                </p>
+                {recipe.tags?.map((tag, i) => (
+                  <li
+                    key={ i }
+                    data-testid={ `${i}-${tag}-horizontal-tag` }
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </>
+            )}
+            <p data-testid={ `${i}-horizontal-done-date` }>
+              {recipe.doneDate}
+            </p>
+            <button
+              className="share-button"
+              onClick={ () => copyToClipboard(`http://localhost:3000/${recipe.type}s/${recipe.id}`) }
+            >
+              { !linkCopied
+                ? <img
+                    src={ shareIcon }
+                    data-testid={ `${i}-horizontal-share-btn` }
+                    alt="Botão de Compartilhamento"
+                />
+                : <span>Link copied!</span>}
+            </button>
+          </div>
         </div>
       )) : (<h3>Nenhuma receita enconytrada</h3>) }
       <Footer />

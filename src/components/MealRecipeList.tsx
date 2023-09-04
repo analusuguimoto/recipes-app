@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
+import '../App.css';
 import '../styles/recipeCard.css';
 
 interface RecipeListProps {
@@ -22,13 +23,15 @@ function RecipeList({ recipes }: RecipeListProps) {
           to={ `/meals/${recipe.idMeal}` }
           key={ recipe.idMeal }
         >
-          <RecipeCard
-            key={ recipe.idMeal }
-            index={ index }
-            id={ recipe.idMeal }
-            name={ recipe.strMeal }
-            image={ recipe.strMealThumb }
-          />
+          <div className="recipe-card">
+            <RecipeCard
+              key={ recipe.idMeal }
+              index={ index }
+              id={ recipe.idMeal }
+              name={ recipe.strMeal }
+              image={ recipe.strMealThumb }
+            />
+          </div>
         </Link>
       ))}
     </div>

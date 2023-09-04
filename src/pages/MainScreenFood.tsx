@@ -10,6 +10,7 @@ import { MealType } from '../types';
 import ButtonRecipeStart from '../components/ButtonRecipeStart';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import '../styles/detailScreen.css';
 
 function MainScreenFood() {
   const { id } = useParams<{ id: string }>();
@@ -103,13 +104,20 @@ function MainScreenFood() {
   };
 
   const existingRecipe = favoriteRecipes.find((item) => item.id === mealRecipe?.idMeal);
+  const imageUrl = mealRecipe?.strMealThumb || 'URL_PADRÃO_DA_IMAGEM';
 
   return (
     <>
-      <nav>
-        <h1 data-testid="recipe-category">{ mealRecipe?.strCategory }</h1>
+      <nav className="nav-container">
+        <h1
+          className="nav-title"
+          data-testid="recipe-category"
+        >
+          { mealRecipe?.strCategory }
+        </h1>
         <div>
           <button
+            className="share-btn"
             data-testid="share-btn"
             onClick={ () => handleShareBtn() }
           >
@@ -117,6 +125,7 @@ function MainScreenFood() {
               : <span>Link copied!</span>}
           </button>
           <button
+            className="like-btn"
             onClick={ handleFavoriteMeal }
           >
             <img
@@ -127,16 +136,27 @@ function MainScreenFood() {
           </button>
         </div>
       </nav>
-      <h2 data-testid="recipe-title">{ mealRecipe?.strMeal }</h2>
-      <img
-        data-testid="recipe-photo"
-        src={ mealRecipe?.strMealThumb }
-        alt={ mealRecipe?.strMeal }
-        style={ { maxWidth: '200px', height: 'auto' } }
-      />
-      <div>
-        <h3>Ingredients</h3>
-        <ul>
+      <div
+        className="recipe-image-container"
+      >
+        <img
+          className="recipe-image"
+          data-testid="recipe-photo"
+          src={ mealRecipe?.strMealThumb }
+          alt={ mealRecipe?.strMeal }
+        />
+        <h2
+          className="recipe-name"
+          data-testid="recipe-title"
+        >
+          { mealRecipe?.strMeal }
+        </h2>
+      </div>
+      <div
+        className="body-container"
+      >
+        <h3 className="body-title">Ingredients</h3>
+        <ul className="ingredient-list">
           {ingredients.map((ingredient, i) => (
             <li
               key={ i }
@@ -147,15 +167,24 @@ function MainScreenFood() {
           ))}
         </ul>
       </div>
-      <div>
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{ mealRecipe?.strInstructions }</p>
+      <div className="body-container">
+        <h3 className="body-title">Instructions</h3>
+        <p
+          className="instructions-text"
+          data-testid="instructions"
+        >
+          { mealRecipe?.strInstructions }
+
+        </p>
       </div>
-      <div>
+      <h3 className="video-title">Video</h3>
+      <div
+        className="yt-container"
+      >
         { mealRecipe?.strYoutube ? <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${mealRecipe?.strYoutube.split('=')[1]}` } /> : null }
       </div>
-      <div>
-        <h3>Recommendations</h3>
+      <div className="rec-container">
+        <h3 className="rec-title">Recommendations</h3>
         <div className="recommendation-carousel">
           {drinkRecommendations.slice(0, 6).map((recommendation, index) => (
             <DrinkRecommendationCard
