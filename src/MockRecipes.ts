@@ -1,4 +1,6 @@
+import { corbaRecipe } from './Corba';
 import { mealsMock, drinksMock } from './MockDrinksAndMeals';
+import { drinkAqua } from './drink';
 
 export const beefMeals = {
   meals: [
@@ -128,35 +130,27 @@ export const fetchMockData = (url: string) => Promise.resolve(
       if (url === 'https://www.themealdb.com/api/json/v1/1/list.php?c=list') {
         return Promise.resolve(mealCategories);
       }
-
       if (url === 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list') {
         return Promise.resolve(drinkCategories);
       }
-
       if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef') {
         return Promise.resolve(beefMeals);
       }
-
       if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Chicken') {
         return Promise.resolve(chickenMeals);
       }
-
       if (url === 'https://www.themealdb.com/api/json/v1/1/filter.php?c=Dessert') {
         return Promise.resolve(dessertMeals);
       }
-
       if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary Drink') {
         return Promise.resolve(ordinaryDrinks);
       }
-
       if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail') {
         return Promise.resolve(cocktailDrinks);
       }
-
       if (url === 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Shake') {
         return Promise.resolve(milkDrinks);
       }
-
       if (url === 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=') {
         return Promise.resolve(drinksMock);
       }
@@ -164,6 +158,15 @@ export const fetchMockData = (url: string) => Promise.resolve(
       if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=') {
         return Promise.resolve(mealsMock);
       }
+
+      if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=00000') {
+        return Promise.resolve(corbaRecipe);
+      }
+
+      if (url === 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=00000') {
+        return Promise.resolve(drinkAqua);
+      }
+
       console.log('url não encontrada no mock', url);
     },
   },

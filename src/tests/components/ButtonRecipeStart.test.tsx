@@ -6,13 +6,17 @@ import { renderWithRouter } from '../renderWith';
 import MainScreenFood from '../../pages/MainScreenFood';
 import MainScreenDrink from '../../pages/MainScreenDrink';
 import ButtonRecipeStart from '../../components/ButtonRecipeStart';
+import { fetchMockData } from '../../MockRecipes';
 
 const startRecipeBtn = 'start-recipe-btn';
+
+global.fetch = vi.fn(fetchMockData) as unknown as any;
 
 const navigate = vi.fn();
 
 beforeEach(() => {
   vi.spyOn(router, 'useNavigate').mockImplementation(() => navigate);
+  vi.spyOn(router, 'useParams').mockImplementation(() => ({ id: '00000' }));
 });
 
 const localStorageWithoutRecipeInProgress = {
@@ -24,7 +28,7 @@ const localStorageWithoutRecipeInProgress = {
 const localStorageWithRecipeInProgress = {
   getItem: vi.fn((key) => {
     if (key === 'inProgressRecipes') {
-      return JSON.stringify({ meals: { 12345: 'in-progress' } });
+      return JSON.stringify({ meals: { '00000': 'in-progress' } });
     }
     return null;
   }),
@@ -33,27 +37,27 @@ const localStorageWithRecipeInProgress = {
 describe('ButtonRecipeStart', () => {
   it('renders the button and handles click event on meal page', () => {
     renderWithRouter(<MainScreenFood />, {
-      initialEntries: ['/meals/52977'],
+      initialEntries: ['/meals/00000'],
     });
 
     const startRecipeButton = screen.getByTestId(startRecipeBtn);
 
     fireEvent.click(startRecipeButton);
     waitFor(() => {
-      expect(window.location.pathname).toBe('/meals/15997/in-progress');
+      expect(window.location.pathname).toBe('/meals/00000/in-progress');
     });
   });
 
   it('renders the button and handles click event on drinks page', () => {
     renderWithRouter(<MainScreenDrink />, {
-      initialEntries: ['/drinks/17222'],
+      initialEntries: ['/drinks/00000'],
     });
 
     const startRecipeButton = screen.getByTestId(startRecipeBtn);
 
     fireEvent.click(startRecipeButton);
     waitFor(() => {
-      expect(window.location.pathname).toBe('/drinks/17222/in-progress');
+      expect(window.location.pathname).toBe('/drinks/00000/in-progress');
     });
   });
 });
@@ -67,26 +71,26 @@ describe('ButtonRecipeStart', () => {
   });
 
   it('renders "Continue Recipe" when there is a recipe in progress and navigates correctly to meals', () => {
-    render(<ButtonRecipeStart page="Meal" recipeId="12345" />);
+    render(<ButtonRecipeStart page="Meal" recipeId="00000" />);
     const startRecipeButton = screen.getByTestId(startRecipeBtn);
     expect(startRecipeButton).toBeInTheDocument();
     expect(startRecipeButton).toHaveTextContent('Continue Recipe');
 
     fireEvent.click(startRecipeButton);
     waitFor(() => {
-      expect(window.location.pathname).toBe('/meals/12345/in-progress');
+      expect(window.location.pathname).toBe('/meals/00000/in-progress');
     });
   });
 
   it('renders "Continue Recipe" when there is a recipe in progress and navigates correctly to drinks', () => {
-    render(<ButtonRecipeStart page="Drink" recipeId="12345" />);
+    render(<ButtonRecipeStart page="Drink" recipeId="00000" />);
     const startRecipeButton = screen.getByTestId(startRecipeBtn);
     expect(startRecipeButton).toBeInTheDocument();
     expect(startRecipeButton).toHaveTextContent('Continue Recipe');
 
     fireEvent.click(startRecipeButton);
     waitFor(() => {
-      expect(window.location.pathname).toBe('/drinks/12345/in-progress');
+      expect(window.location.pathname).toBe('/drinks/00000/in-progress');
     });
   });
 });
@@ -100,7 +104,7 @@ describe('ButtonRecipeStart', () => {
   });
 
   it('renders "Start Recipe" when there is no recipe in progress', () => {
-    render(<ButtonRecipeStart page="Meal" recipeId="12345" />);
+    render(<ButtonRecipeStart page="Meal" recipeId="00000" />);
     const startRecipeButton = screen.getByTestId(startRecipeBtn);
     expect(startRecipeButton).toBeInTheDocument();
     expect(startRecipeButton).toHaveTextContent('Start Recipe');

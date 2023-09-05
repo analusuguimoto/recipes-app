@@ -10,14 +10,14 @@ import { fetchMockData } from '../../MockRecipes';
 const emailTest = 'test@test.co';
 const passwordTest = 'sdwsdasd12!';
 
+global.fetch = vi.fn(fetchMockData) as unknown as any;
 describe('Testes de Recipes - Rota Meals', async () => {
-  beforeEach(() => {
-    global.fetch = vi.fn(fetchMockData) as unknown as any;
-  });
+  // beforeEach(() => {
+  // });
 
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
+  // afterEach(() => {
+  //   vi.clearAllMocks();
+  // });
 
   test('Testa se a seção de Meals funciona corretamente', async () => {
     renderWithRouter(
