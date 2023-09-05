@@ -1,0 +1,12 @@
+.btnStartRecipe {
+  margin: 0 20px 10px 20px;
+  border: none;
+  width: 94%;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: var(--orange-300);
+  color: var(--red-700);
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+}

@@ -1,15 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
-import Profile from './pages/Profile';
-import DoneRecipes from './pages/DoneRecipes';
-import FavoriteRecipe from './pages/FavoriteRecipe';
-import Recipes from './pages/Recipes';
+import Login from './components/Login/Login';
+import Profile from './pages/Profile/Profile';
+import DoneRecipes from './pages/DoneRecipes/DoneRecipes';
+import FavoriteRecipe from './pages/FavoriteRecipe/FavoriteRecipe';
+import Recipes from './pages/Recipes/Recipes';
 // import RecipeDetails from './pages/RecipeDetails';
 // import RecipeInProgress from './pages/RecipeInProgress';
-import MainScreenFood from './pages/MainScreenFood';
-import MainScreenDrink from './pages/MainScreenDrink';
-import DetailsDrinkInProgress from './pages/DetailsDrinkInProgress';
-import DetailsFoodInProgress from './pages/DetailsFoodInProgress';
+import MainScreenFood from './pages/MainScreenDetails/MainScreenFood';
+import MainScreenDrink from './pages/MainScreenDetails/MainScreenDrink';
+import DetailsDrinkInProgress from './pages/InProgress/DetailsDrinkInProgress';
+import DetailsFoodInProgress from './pages/InProgress/DetailsFoodInProgress';
 
 function App() {
   return (

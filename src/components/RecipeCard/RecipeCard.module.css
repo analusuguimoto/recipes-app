@@ -1,0 +1,10 @@
+.cardContainer img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.cardContainer p {
+  color: var(--red-700);
+  font-weight: 500;
+}

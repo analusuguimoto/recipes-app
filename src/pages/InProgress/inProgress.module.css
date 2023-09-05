@@ -1,0 +1,123 @@
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--orange-300);
+  padding: 14px;
+  align-items: center;
+}
+
+.navContainer h1 {
+  color: var(--red-700);
+}
+
+.btnHeaderContainer {
+  display: flex;
+  align-items: center;
+}
+
+.shareBtn {
+  border: none;
+  margin-right: 10px;
+  background-color: var(--orange-300);
+}
+
+.likeBtn {
+  border: none;
+  background-color: var(--orange-300);
+}
+
+.recipeImgContainer {
+  position: relative;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  height: 300px;
+  overflow: hidden;
+}
+
+.recipeImg {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.recipeName {
+  position: absolute;
+  bottom: 150px;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 8px;
+  margin: 0;
+}
+
+.divContainer {
+  margin: 10px 20px 30px 20px;
+}
+
+.divTitle {
+  color: var(--red-700);
+  margin-left: 6px;
+  margin-bottom: 5px;
+}
+
+.ingredientList {
+  padding: 10px 0 10px 25px;
+  list-style-type: square;
+  color: var(--red-700);
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.instructionsText {
+  padding: 10px 15px 10px 15px;
+  color: var(--red-700);
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.videoTitle {
+  margin-left: 26px;
+  margin-bottom: 5px;
+  color: var(--red-700);
+}
+
+.ytContainer {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.ytContainer iframe {
+  width: 94%;
+  border: none;
+  border-radius: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.btnFinishRecipe {
+  margin: 0 20px 10px 20px;
+  border: none;
+  width: 94%;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: var(--orange-300);
+  color: var(--red-700);
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+}
+
+.btnFinishRecipe:disabled {
+  margin: 0 20px 10px 20px;
+  border: none;
+  width: 94%;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: rgb(226,153,61, 0.4);
+  color: rgb(165,32,15, 0.4);
+  font-weight: bold;
+  font-size: large;
+  cursor: pointer;
+}

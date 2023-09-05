@@ -1,0 +1,36 @@
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 70%;
+  margin-left: 15%;
+}
+
+.searchInput {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  width: 70%;
+  padding: 8px;
+  border-color: var(--orange-300);
+  border-radius: 10px;
+}
+
+.formContainer {
+  color: var(--red-700);
+}
+
+.formContainer label {
+  padding: 5px;
+}
+
+.searchBtn {
+  margin-top: 5px;
+  width: 70%;
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  color: var(--red-700);
+  font-size: large;
+  font-weight: bold;
+  background-color: var(--orange-300);
+}

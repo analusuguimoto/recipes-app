@@ -1,0 +1,60 @@
+.headerContainer {
+  align-items: center;
+  background-color: var(--orange-300);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7rem;
+}
+
+.headerTitle {
+  color: var(--red-700);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.headerTitle em {
+  font-style: italic;
+  font-weight: 100;
+}
+
+.headerLogo {
+  height: 50px;
+}
+
+.headerIcons {
+  display: flex;
+  align-items: center;
+}
+
+.headerIcons img {
+  height: 24px;
+  margin-right: 1rem;
+  width: 24px;
+}
+
+.btnSearch {
+  border: none;
+  background-color: var(--orange-300);
+  cursor: pointer;
+}
+
+.titleWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px; 
+}
+
+.pageTitle {
+  color: var(--red-700); 
+  font-size: 24px; 
+  font-weight: bold; 
+  margin-bottom: 5px; 
+}
+
+.titleIcon img {
+  margin-bottom: 15px;
+  height: 30px;
+  width: 30px;
+}

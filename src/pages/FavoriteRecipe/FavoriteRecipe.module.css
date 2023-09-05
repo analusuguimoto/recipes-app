@@ -1,0 +1,18 @@
+.btnContainer {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+}
+.btnContainer button {
+  border: none;
+  color: rgb(165,32,15);
+  background-color: rgb(226,153,61);
+  border-radius: 10px;
+  padding: 15px;
+  font-weight: bold;
+  font-size: medium;
+  cursor: pointer;
+  margin-bottom: 10px;
+}

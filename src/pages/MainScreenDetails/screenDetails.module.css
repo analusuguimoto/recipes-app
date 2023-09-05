@@ -1,0 +1,119 @@
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--orange-300);
+  padding: 14px;
+  align-items: center;
+}
+
+.navContainer h1 {
+  color: var(--red-700);
+}
+
+.btnHeaderContainer {
+  display: flex;
+  align-items: center;
+}
+
+.shareBtn {
+  border: none;
+  margin-right: 10px;
+  background-color: var(--orange-300);
+}
+
+.likeBtn {
+  border: none;
+  background-color: var(--orange-300);
+}
+
+.recipeImgContainer {
+  position: relative;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  height: 300px;
+  overflow: hidden;
+}
+
+.recipeImg {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.recipeName {
+  position: absolute;
+  bottom: 150px;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 8px;
+  margin: 0;
+}
+
+.divContainer {
+  margin: 10px 20px 30px 20px;
+}
+
+.divTitle {
+  color: var(--red-700);
+  margin-left: 6px;
+  margin-bottom: 5px;
+}
+
+.ingredientList {
+  padding: 10px 0 10px 25px;
+  list-style-type: square;
+  color: var(--red-700);
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.instructionsText {
+  padding: 10px 15px 10px 15px;
+  color: var(--red-700);
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.videoTitle {
+  margin-left: 26px;
+  margin-bottom: 5px;
+  color: var(--red-700);
+}
+
+.ytContainer {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.ytContainer iframe {
+  width: 94%;
+  border: none;
+  border-radius: 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.recContainer {
+  margin: 10px 20px 30px 20px;
+}
+
+.recTitle {
+  margin-left: 6px;
+  color: var(--red-700);
+}
+
+.recommendationCarousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: scroll;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 80px;
+  text-align: center;
+  color: var(--red-700);
+  font-size: large;
+}
+
