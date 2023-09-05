@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import FavoriteRecipeCard from '../../components/FavoriteRecipeCard';
+import FavoriteRecipeCard from '../../components/FavoriteRecipeCard/FavoriteRecipeCard';
 import { RecipeContextProviderTest } from '../test-context';
 
 function Wrapper({ children }: { children: React.ReactNode }) {

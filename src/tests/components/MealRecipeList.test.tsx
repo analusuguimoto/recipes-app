@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import RecipeList from '../../components/MealRecipeList';
+import RecipeList from '../../components/RecipeList/MealRecipeList';
 
 describe('RecipeList', () => {
   it('renders a list of recipe links', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import DrinkRecommendationCard from '../../components/DrinkRecommendationCard';
-import MealRecommendationCard from '../../components/MealRecommendationCard';
+import DrinkRecommendationCard from '../../components/RecommendationCard/DrinkRecommendationCard';
+import MealRecommendationCard from '../../components/RecommendationCard/MealRecommendationCard';
 
 describe('Recomendation cards', () => {
   it('renders the recommendation card with title and image', () => {

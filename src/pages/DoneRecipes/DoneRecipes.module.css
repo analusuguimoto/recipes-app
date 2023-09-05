@@ -1,0 +1,72 @@
+.btnContainer {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  text-align: center;
+  width: auto;
+}
+
+.btnContainer button {
+  background-color: var(--orange-300);
+  border: none;
+  border-radius: 10px;
+  color: var(--red-700);
+  cursor: pointer;
+  font-size: medium;
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+.recipeCard {
+  align-items: center;
+  background-color: white;
+  border: 1px solid var(--orange-500);
+  border-radius: 15px;
+  display: flex;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 16px 32px 8px;
+  text-align: center;
+}
+
+.recipeImg {
+  border-radius: 10px;
+  flex: 1; /* A imagem ocupa uma parte do espaço disponível */
+  margin-right: 16px; /* Espaçamento entre a imagem e o texto */
+}
+
+.recipeImg img {
+  height: auto; /* Mantenha a proporção da imagem */
+  max-width: 100%; /* Garanta que a imagem não ultrapasse o espaço do card */
+}
+
+.recipeDetails {
+  flex: 2; /* O texto ocupa uma parte maior do espaço disponível */
+}
+
+.recipeDetails h1 {
+  font-size: 24px; /* Tamanho do título */
+  margin: 0; /* Remova margens padrão */
+}
+
+.recipeDetails p {
+  margin: 8px 0; /* Espaçamento entre os parágrafos */
+}
+
+.recipeDetails ul {
+  list-style-type: square; /* Use marcadores quadrados para a lista */
+  padding-left: 16px; /* Espaçamento da lista */
+}
+
+.recipeTitle {
+  color: var(--red-700);
+  text-decoration: none;
+}
+
+.btnShareContainer button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
