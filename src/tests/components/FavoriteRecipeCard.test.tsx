@@ -25,7 +25,7 @@ test('renders a favorite recipe card', () => {
 
   render(
     <Wrapper>
-      <FavoriteRecipeCard i={ 0 } recipe={ recipe } />
+      <FavoriteRecipeCard i={ 0 } recip={ recipe } />
     </Wrapper>,
   );
 
@@ -46,7 +46,7 @@ test('renders a favorite recipe card for a drink', () => {
 
   render(
     <Wrapper>
-      <FavoriteRecipeCard i={ 0 } recipe={ recipe } />
+      <FavoriteRecipeCard i={ 0 } recip={ recipe } />
     </Wrapper>,
   );
 
@@ -72,7 +72,7 @@ test('renders a favorite recipe card and removes it from favorites when clicked 
 
   render(
     <Wrapper>
-      <FavoriteRecipeCard i={ 0 } recipe={ recipe } />
+      <FavoriteRecipeCard i={ 0 } recip={ recipe } />
     </Wrapper>,
   );
 

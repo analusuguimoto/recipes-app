@@ -1,13 +1,16 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import App from '../../App';
 import { renderWithRouter } from '../renderWith';
+import { fetchMockData } from '../../MockRecipes';
+
+global.fetch = vi.fn(fetchMockData) as unknown as any;
 
 describe('Verifica se a tela de login renderiza corretamente os elementos', () => {
   test('Verifica se é exibido um heading com o nome da aplicação', () => {
     renderWithRouter(<App />);
-    const heading = screen.getByText(/trybeats/i);
+    const heading = screen.getByText(/login/i);
     expect(heading).toBeInTheDocument();
   });
 

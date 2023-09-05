@@ -1,9 +1,12 @@
-import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { vi } from 'vitest';
 import FoodRecipe from '../../pages/Recipes/FoodRecipe';
 import { renderWithRouter } from '../renderWith';
 import { RecipeProvider } from '../../context/search-results-context';
 import Profile from '../../pages/Profile/Profile';
+import { fetchMockData } from '../../MockRecipes';
+
+global.fetch = vi.fn(fetchMockData) as unknown as any;
 
 test('renders Food Recipe page with category buttons', async () => {
   renderWithRouter(
@@ -47,6 +50,7 @@ test('displays a message when no results are found', async () => {
 });
 
 // Por algum motivo esse teste falha quando coloco ele no arquivo com os outros testes dessa page.
+// Coloca um beforeEach com localstorage.clear
 test('clears localStorage and navigates to Login screen on Logout button click', () => {
   const mockUser = { email: 'test@example.com' };
   localStorage.setItem('user', JSON.stringify(mockUser));
