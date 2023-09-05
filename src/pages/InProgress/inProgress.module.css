@@ -1,0 +1,123 @@
+.navContainer {
+  align-items: center;
+  background-color: var(--orange-300);
+  display: flex;
+  justify-content: space-between;
+  padding: 14px;
+}
+
+.navContainer h1 {
+  color: var(--red-700);
+}
+
+.btnHeaderContainer {
+  align-items: center;
+  display: flex;
+}
+
+.shareBtn {
+  background-color: var(--orange-300);
+  border: none;
+  margin-right: 10px;
+}
+
+.likeBtn {
+  background-color: var(--orange-300);
+  border: none;
+}
+
+.recipeImgContainer {
+  display: flex;
+  height: 300px;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+
+.recipeImg {
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+.recipeName {
+  background-color: rgba(0, 0, 0, 0.3);
+  bottom: 150px;
+  color: white;
+  left: 0;
+  margin: 0;
+  padding: 8px;
+  position: absolute;
+  right: 0;
+}
+
+.divContainer {
+  margin: 10px 20px 30px;
+}
+
+.divTitle {
+  color: var(--red-700);
+  margin-bottom: 5px;
+  margin-left: 6px;
+}
+
+.ingredientList {
+  border: 1px solid;
+  border-radius: 10px;
+  color: var(--red-700);
+  list-style-type: square;
+  padding: 10px 0 10px 25px;
+}
+
+.instructionsText {
+  border: 1px solid;
+  border-radius: 10px;
+  color: var(--red-700);
+  padding: 10px 15px;
+}
+
+.videoTitle {
+  color: var(--red-700);
+  margin-bottom: 5px;
+  margin-left: 26px;
+}
+
+.ytContainer {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.ytContainer iframe {
+  border: none;
+  border-radius: 15px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 94%;
+}
+
+.btnFinishRecipe {
+  background-color: var(--orange-300);
+  border: none;
+  border-radius: 15px;
+  color: var(--red-700);
+  cursor: pointer;
+  font-size: large;
+  font-weight: 700;
+  margin: 0 20px 10px;
+  padding: 15px;
+  width: 94%;
+}
+
+.btnFinishRecipe:disabled {
+  background-color: rgb(226, 153, 61, 0.4);
+  border: none;
+  border-radius: 15px;
+  color: rgb(165, 32, 15, 0.4);
+  cursor: pointer;
+  font-size: large;
+  font-weight: 700;
+  margin: 0 20px 10px;
+  padding: 15px;
+  width: 94%;
+}

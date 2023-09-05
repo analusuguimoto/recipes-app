@@ -1,0 +1,54 @@
+body {
+  background-color: rgb(255, 238, 210);
+}
+
+.titleLogin {
+  color: var(--red-700);
+  margin-bottom: 10px;
+  margin-top: 5%;
+  text-align: center;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 20%;
+  width: 60%;
+}
+
+.formContainer input {
+  border-color: var(--brown-300);
+  border-radius: 15px;
+  box-shadow: none;
+  padding: 15px;
+}
+
+.btnLogin {
+  background-color: var(--orange-300);
+  border: none;
+  border-radius: 15px;
+  color: var(--red-700);
+  cursor: pointer;
+  font-size: large;
+  font-weight: 700;
+  padding: 15px;
+}
+
+.btnLogin:disabled {
+  background-color: rgba(226, 153, 61, 0.4);
+  border: none;
+  border-radius: 15px;
+  color: var(--red-700);
+  cursor: pointer;
+  font-size: large;
+  font-weight: 700;
+  padding: 15px;
+}
+
+.backPhoto {
+  bottom: 0;
+  max-height: 50%;
+  position: fixed;
+  width: 100%;
+}

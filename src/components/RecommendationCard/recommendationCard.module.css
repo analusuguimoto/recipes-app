@@ -1,0 +1,12 @@
+.recommendationCard {
+  border: 1px solid var(--orange-500);
+  border-radius: 10px;
+  flex: 0 0 calc(50% - 10px);
+  padding: 10px;
+}
+
+.recommendationImage {
+  border-radius: 15px;
+  height: auto;
+  max-width: 100%;
+}

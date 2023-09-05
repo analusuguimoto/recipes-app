@@ -3,10 +3,10 @@ import { vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as router from 'react-router';
 import { renderWithRouter } from '../renderWith';
-import MainScreenFood from '../../pages/MainScreenFood';
-import MainScreenDrink from '../../pages/MainScreenDrink';
-import ButtonRecipeStart from '../../components/ButtonRecipeStart';
 import { fetchMockData } from '../../MockRecipes';
+import MainScreenFood from '../../pages/MainScreenDetails/MainScreenFood';
+import MainScreenDrink from '../../pages/MainScreenDetails/MainScreenDrink';
+import ButtonRecipeStart from '../../components/ButtonoRecipeStart/ButtonRecipeStart';
 
 const startRecipeBtn = 'start-recipe-btn';
 

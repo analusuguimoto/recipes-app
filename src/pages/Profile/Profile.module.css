@@ -1,0 +1,30 @@
+.picProfile {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.profileEmail {
+  color: var(--red-700);
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 10px;
+}
+
+.btnContainer {
+  border-bottom: 1px solid rgba(221, 101, 38, 0.5);
+  display: flex;
+  justify-content: center;
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-top: 50px;
+  padding-bottom: 20px;
+}
+
+.profileBtn {
+  background-color: rgb(255, 238, 210);
+  border: none;
+  color: var(--orange-300);
+  cursor: pointer;
+  font-size: large;
+}

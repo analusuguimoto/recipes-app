@@ -1,9 +1,9 @@
 import React from 'react';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
-import FoodRecipe from '../../pages/FoodRecipe';
+import FoodRecipe from '../../pages/Recipes/FoodRecipe';
 import { renderWithRouter } from '../renderWith';
 import { RecipeProvider } from '../../context/search-results-context';
-import Profile from '../../pages/Profile';
+import Profile from '../../pages/Profile/Profile';
 
 test('renders Food Recipe page with category buttons', async () => {
   renderWithRouter(

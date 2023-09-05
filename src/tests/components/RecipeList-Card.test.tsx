@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import DrinkRecipeList from '../../components/DrinkRecipeList';
-import RecipeCard from '../../components/RecipeCard';
+import DrinkRecipeList from '../../components/RecipeList/DrinkRecipeList';
+import RecipeCard from '../../components/RecipeCard/RecipeCard';
 
 const drinkCardMock = {
   idDrink: '1',

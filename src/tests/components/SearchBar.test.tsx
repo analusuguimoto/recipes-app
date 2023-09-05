@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
-import SearchBar from '../../components/SearchBar';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import * as mocks from '../../MockDataResults';
 import { renderWithRouter } from '../renderWith';
 import { RecipeProvider, useRecipeContext } from '../../context/search-results-context';
