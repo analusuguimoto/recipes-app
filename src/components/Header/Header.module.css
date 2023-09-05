@@ -7,10 +7,10 @@
 }
 
 .headerTitle {
-  color: var(--red-700);
-  font-size: 1.2rem;
-  display: flex;
   align-items: center;
+  color: var(--red-700);
+  display: flex;
+  font-size: 1.2rem;
 }
 
 .headerTitle em {
@@ -23,8 +23,8 @@
 }
 
 .headerIcons {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .headerIcons img {
@@ -34,8 +34,8 @@
 }
 
 .btnSearch {
-  border: none;
   background-color: var(--orange-300);
+  border: none;
   cursor: pointer;
 }
 
@@ -43,18 +43,18 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 .pageTitle {
-  color: var(--red-700); 
-  font-size: 24px; 
-  font-weight: bold; 
-  margin-bottom: 5px; 
+  color: var(--red-700);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 5px;
 }
 
 .titleIcon img {
-  margin-bottom: 15px;
   height: 30px;
+  margin-bottom: 15px;
   width: 30px;
 }

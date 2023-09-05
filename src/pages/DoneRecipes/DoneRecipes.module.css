@@ -1,33 +1,33 @@
 .btnContainer {
-  width: auto;
   display: flex;
+  gap: 5px;
   justify-content: center;
   text-align: center;
-  gap: 5px;
+  width: auto;
 }
 
 .btnContainer button {
-  border: none;
-  color: var(--red-700);
   background-color: var(--orange-300);
+  border: none;
   border-radius: 10px;
-  padding: 15px;
-  font-weight: bold;
-  font-size: medium;
+  color: var(--red-700);
   cursor: pointer;
+  font-size: medium;
+  font-weight: 700;
   margin-bottom: 10px;
+  padding: 15px;
 }
 
 .recipeCard {
-  display: flex;
   align-items: center;
-  padding: 16px 32px 8px 32px;
+  background-color: white;
   border: 1px solid var(--orange-500);
   border-radius: 15px;
+  display: flex;
   margin-bottom: 10px;
   margin-left: 10px;
   margin-right: 10px;
-  background-color: white;
+  padding: 16px 32px 8px;
   text-align: center;
 }
 
@@ -38,8 +38,8 @@
 }
 
 .recipeImg img {
-  max-width: 100%; /* Garanta que a imagem não ultrapasse o espaço do card */
   height: auto; /* Mantenha a proporção da imagem */
+  max-width: 100%; /* Garanta que a imagem não ultrapasse o espaço do card */
 }
 
 .recipeDetails {
@@ -61,12 +61,12 @@
 }
 
 .recipeTitle {
-  text-decoration: none;
   color: var(--red-700);
+  text-decoration: none;
 }
 
 .btnShareContainer button {
-  border: none;
   background-color: white;
+  border: none;
   cursor: pointer;
 }

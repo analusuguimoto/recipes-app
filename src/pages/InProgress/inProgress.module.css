@@ -1,9 +1,9 @@
 .navContainer {
+  align-items: center;
+  background-color: var(--orange-300);
   display: flex;
   justify-content: space-between;
-  background-color: var(--orange-300);
   padding: 14px;
-  align-items: center;
 }
 
 .navContainer h1 {
@@ -11,113 +11,113 @@
 }
 
 .btnHeaderContainer {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .shareBtn {
+  background-color: var(--orange-300);
   border: none;
   margin-right: 10px;
-  background-color: var(--orange-300);
 }
 
 .likeBtn {
-  border: none;
   background-color: var(--orange-300);
+  border: none;
 }
 
 .recipeImgContainer {
-  position: relative;
   display: flex;
-  text-align: center;
-  justify-content: center;
   height: 300px;
+  justify-content: center;
   overflow: hidden;
+  position: relative;
+  text-align: center;
 }
 
 .recipeImg {
-  width: 100%;
   height: auto;
   object-fit: cover;
+  width: 100%;
 }
 
 .recipeName {
-  position: absolute;
-  bottom: 150px;
-  left: 0;
-  right: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  color: #fff;
-  padding: 8px;
+  bottom: 150px;
+  color: white;
+  left: 0;
   margin: 0;
+  padding: 8px;
+  position: absolute;
+  right: 0;
 }
 
 .divContainer {
-  margin: 10px 20px 30px 20px;
+  margin: 10px 20px 30px;
 }
 
 .divTitle {
   color: var(--red-700);
-  margin-left: 6px;
   margin-bottom: 5px;
+  margin-left: 6px;
 }
 
 .ingredientList {
-  padding: 10px 0 10px 25px;
-  list-style-type: square;
-  color: var(--red-700);
   border: 1px solid;
   border-radius: 10px;
+  color: var(--red-700);
+  list-style-type: square;
+  padding: 10px 0 10px 25px;
 }
 
 .instructionsText {
-  padding: 10px 15px 10px 15px;
-  color: var(--red-700);
   border: 1px solid;
   border-radius: 10px;
+  color: var(--red-700);
+  padding: 10px 15px;
 }
 
 .videoTitle {
-  margin-left: 26px;
-  margin-bottom: 5px;
   color: var(--red-700);
+  margin-bottom: 5px;
+  margin-left: 26px;
 }
 
 .ytContainer {
-  text-align: center;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .ytContainer iframe {
-  width: 94%;
   border: none;
   border-radius: 15px;
   display: inline-block;
   vertical-align: middle;
+  width: 94%;
 }
 
 .btnFinishRecipe {
-  margin: 0 20px 10px 20px;
-  border: none;
-  width: 94%;
-  padding: 15px;
-  border-radius: 15px;
   background-color: var(--orange-300);
+  border: none;
+  border-radius: 15px;
   color: var(--red-700);
-  font-weight: bold;
-  font-size: large;
   cursor: pointer;
+  font-size: large;
+  font-weight: 700;
+  margin: 0 20px 10px;
+  padding: 15px;
+  width: 94%;
 }
 
 .btnFinishRecipe:disabled {
-  margin: 0 20px 10px 20px;
+  background-color: rgb(226, 153, 61, 0.4);
   border: none;
-  width: 94%;
-  padding: 15px;
   border-radius: 15px;
-  background-color: rgb(226,153,61, 0.4);
-  color: rgb(165,32,15, 0.4);
-  font-weight: bold;
-  font-size: large;
+  color: rgb(165, 32, 15, 0.4);
   cursor: pointer;
+  font-size: large;
+  font-weight: 700;
+  margin: 0 20px 10px;
+  padding: 15px;
+  width: 94%;
 }
