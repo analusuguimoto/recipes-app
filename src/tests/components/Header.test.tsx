@@ -1,8 +1,12 @@
 import { screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../renderWith';
+import { fetchMockData } from '../../MockRecipes';
 import App from '../../App';
 import Header from '../../components/Header/Header';
+
+global.fetch = vi.fn(fetchMockData) as unknown as any;
 
 describe('Verifica se o header renderiza corretamente os elementos', () => {
   test('Verifica os elementos do header', () => {
