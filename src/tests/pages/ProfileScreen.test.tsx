@@ -20,22 +20,22 @@ describe('Profile screen', () => {
     expect(logoutButton).toBeInTheDocument();
   });
 
-  it('navigates to Done Recipes screen on Done Recipes button click', () => {
+  it('navigates to Done Recipes screen on Done Recipes button click', async () => {
     renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
 
     const doneButton = screen.getByTestId('profile-done-btn');
-    userEvent.click(doneButton);
+    await userEvent.click(doneButton);
 
     waitFor(() => {
       expect(window.location.pathname).toBe('/done-recipes');
     });
   });
 
-  it('navigates to Favorite Recipes screen on Favorite Recipes button click', () => {
+  it('navigates to Favorite Recipes screen on Favorite Recipes button click', async () => {
     renderWithRouter(<Profile />, { initialEntries: ['/profile'] });
 
     const favoriteButton = screen.getByTestId('profile-favorite-btn');
-    userEvent.click(favoriteButton);
+    await userEvent.click(favoriteButton);
 
     waitFor(() => {
       expect(window.location.pathname).toBe('/favorite-recipes');

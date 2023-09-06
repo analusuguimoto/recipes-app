@@ -18,7 +18,7 @@ function MainScreenFood() {
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [linkCopied, setLinkCopied] = useState(false);
   const location = useLocation();
-  const currentUrl = `${window.location.origin}${location.pathname}`;
+  const currentUrl = location.pathname;
   const [drinkRecommendations, setDrinkRecommendations] = useState<Drink[]>([]);
   const [ingredients, setIngredients] = useState<string[]>([]);
   const { favoriteRecipes, setFavoriteRecipes } = useRecipeContext();
@@ -67,7 +67,7 @@ function MainScreenFood() {
   }, []);
 
   const handleShareBtn = () => {
-    navigator.clipboard.writeText(currentUrl)
+    navigator.clipboard.writeText(`${window.location.origin}${currentUrl}`)
       .then(() => {
         setLinkCopied(true);
       })
