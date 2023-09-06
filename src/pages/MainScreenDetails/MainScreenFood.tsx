@@ -18,7 +18,7 @@ function MainScreenFood() {
   const [mealRecipe, setMealRecipe] = useState<MealType>();
   const [linkCopied, setLinkCopied] = useState(false);
   const location = useLocation();
-  const currentUrl = location.pathname;
+  const currentUrl = `${window.location.origin}${location.pathname}`;
   const [drinkRecommendations, setDrinkRecommendations] = useState<Drink[]>([]);
   const [ingredients, setIngredients] = useState<string[]>([]);
   const { favoriteRecipes, setFavoriteRecipes } = useRecipeContext();
